@@ -31,6 +31,8 @@
 		CB7C74E01C0F372700F143B4 /* aoc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = aoc.m; sourceTree = "<group>"; };
 		CB7C74E21C0F378A00F143B4 /* aoc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = aoc.h; sourceTree = "<group>"; };
 		CB7C74F41C0F43F600F143B4 /* Inputs */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Inputs; sourceTree = "<group>"; };
+		CB7C74FB1C0F67A500F143B4 /* day1.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = day1.m; sourceTree = "<group>"; };
+		CB7C74FC1C0F67B800F143B4 /* day2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = day2.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +69,8 @@
 				CB7C74D71C0F349A00F143B4 /* main.m */,
 				CB7C74E01C0F372700F143B4 /* aoc.m */,
 				CB7C74E21C0F378A00F143B4 /* aoc.h */,
+				CB7C74FB1C0F67A500F143B4 /* day1.m */,
+				CB7C74FC1C0F67B800F143B4 /* day2.m */,
 			);
 			path = AdventOfCode;
 			sourceTree = "<group>";
