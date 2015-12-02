@@ -19,8 +19,9 @@ NSArray* getInputsFromFile(NSString *method)
     NSString *words = [[NSString alloc] initWithContentsOfFile:path
                                                       encoding:NSUTF8StringEncoding error:&error];
     
-    NSArray* lines = [words componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+    NSMutableArray* lines = [[words componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]] mutableCopy];
     
+    [lines removeObject:@""];
     return lines;
 }
 
@@ -28,17 +29,13 @@ int main(int argc, const char * argv[]) {
     @autoreleasepool {
         
         AOC *aoc = [[AOC alloc] init];
-        NSString *method = @"day1";
+        NSString *method = @"day2";
         
         NSArray *inputs = getInputsFromFile(method);
-        for (NSString *input in inputs)
-        {
-            if ([input isEqual:@""])
-            {
-                continue;
-            }
-            [aoc day1:input];
-        }
+        
+        SEL dayMethod = NSSelectorFromString([method stringByAppendingString:@":"]);
+       
+        [aoc performSelector:dayMethod withObject:inputs];
         
     }
     return 0;
