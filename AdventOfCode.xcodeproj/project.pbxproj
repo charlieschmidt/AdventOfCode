@@ -8,23 +8,29 @@
 
 /* Begin PBXBuildFile section */
 		CB7C74D81C0F349A00F143B4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CB7C74D71C0F349A00F143B4 /* main.m */; };
+		CB7C74E11C0F372700F143B4 /* aoc.m in Sources */ = {isa = PBXBuildFile; fileRef = CB7C74E01C0F372700F143B4 /* aoc.m */; };
+		CB7C74FA1C0F46C500F143B4 /* Inputs in CopyFiles */ = {isa = PBXBuildFile; fileRef = CB7C74F41C0F43F600F143B4 /* Inputs */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		CB7C74D21C0F349A00F143B4 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
+			buildActionMask = 12;
+			dstPath = "";
+			dstSubfolderSpec = 16;
 			files = (
+				CB7C74FA1C0F46C500F143B4 /* Inputs in CopyFiles */,
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		CB7C74D41C0F349A00F143B4 /* AdventOfCode */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = AdventOfCode; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB7C74D71C0F349A00F143B4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		CB7C74E01C0F372700F143B4 /* aoc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = aoc.m; sourceTree = "<group>"; };
+		CB7C74E21C0F378A00F143B4 /* aoc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = aoc.h; sourceTree = "<group>"; };
+		CB7C74F41C0F43F600F143B4 /* Inputs */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Inputs; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +49,7 @@
 			children = (
 				CB7C74D61C0F349A00F143B4 /* AdventOfCode */,
 				CB7C74D51C0F349A00F143B4 /* Products */,
+				CB7C74F41C0F43F600F143B4 /* Inputs */,
 			);
 			sourceTree = "<group>";
 		};
@@ -58,6 +65,8 @@
 			isa = PBXGroup;
 			children = (
 				CB7C74D71C0F349A00F143B4 /* main.m */,
+				CB7C74E01C0F372700F143B4 /* aoc.m */,
+				CB7C74E21C0F378A00F143B4 /* aoc.h */,
 			);
 			path = AdventOfCode;
 			sourceTree = "<group>";
@@ -72,6 +81,7 @@
 				CB7C74D01C0F349A00F143B4 /* Sources */,
 				CB7C74D11C0F349A00F143B4 /* Frameworks */,
 				CB7C74D21C0F349A00F143B4 /* CopyFiles */,
+				CB7C74E61C0F3F7700F143B4 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -113,11 +123,22 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		CB7C74E61C0F3F7700F143B4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		CB7C74D01C0F349A00F143B4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB7C74E11C0F372700F143B4 /* aoc.m in Sources */,
 				CB7C74D81C0F349A00F143B4 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
