@@ -15,6 +15,8 @@
 
 - (void)day2:(NSArray *)inputs;
 
+- (void)day3:(NSArray *)inputs;
+
 @end
 
 

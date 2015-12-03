@@ -15,5 +15,6 @@
 
 #include "day1.m"
 #include "day2.m"
+#include "day3.m"
 
 @end
