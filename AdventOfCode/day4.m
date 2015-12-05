@@ -1,6 +1,17 @@
 
-- (void)day4:(NSArray *)inputs
+- (void)day4:(NSArray *)inputs part:(NSNumber *)part
 {
+    printf("Part: %d\n",[part intValue]);
+    NSString *comparator;
+    if ([part intValue] == 1)
+    {
+        comparator = @"00000";
+    }
+    else
+    {
+        comparator = @"000000";
+    }
+    
     for (NSString *input in inputs)
     {
         printf("Input: %s\n",[input UTF8String]);
@@ -12,7 +23,7 @@
         {
             NSString *secretKey = [NSString stringWithFormat:@"%@%d",input,i];
             NSString *md5 = [self md5For:secretKey];
-            if ([[md5 substringToIndex:6] compare:@"000000"] == NSOrderedSame)
+            if ([[md5 substringToIndex:[comparator length]] compare:comparator] == NSOrderedSame)
             {
                 found = YES;
                 break;

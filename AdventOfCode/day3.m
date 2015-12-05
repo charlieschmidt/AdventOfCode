@@ -1,12 +1,19 @@
 
-- (void)day3:(NSArray *)inputs
+- (void)day3:(NSArray *)inputs part:(NSNumber *)part
 {
+    int numSantas = [part intValue];
+    
     for (NSString *input in inputs)
     {
         printf("Input: %s\n",[input UTF8String]);
      
-        int x[2] = {0,0};
-        int y[2] = {0,0};
+        int x[numSantas];
+        int y[numSantas];
+        
+        for (int i = 0; i < numSantas; i++)
+        {
+            x[i] = y[i] = 0;
+        }
         
         NSInteger len = [input length];
         NSInteger position = 1;
@@ -17,7 +24,7 @@
         {
             char c = [input characterAtIndex:position - 1];
        
-            int whichSanta = (position - 1) % 2;
+            int whichSanta = (position - 1) % numSantas;
             
             switch (c)
             {
@@ -35,7 +42,7 @@
             position++;
         }
         
-        printf("Unique houses visited: %lu\n",(unsigned long)[houses count]);
+        printf("Unique houses visited by %d santas: %lu\n",numSantas, (unsigned long)[houses count]);
     }
     
     printf("\n");

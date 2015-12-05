@@ -13,14 +13,6 @@
 
 @interface AOC : NSObject
 
-- (void)day1:(NSArray *)inputs;
-
-- (void)day2:(NSArray *)inputs;
-
-- (void)day3:(NSArray *)inputs;
-
-- (void)day4:(NSArray *)inputs;
-
 @end
 
 

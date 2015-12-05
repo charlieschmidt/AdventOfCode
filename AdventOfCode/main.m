@@ -34,9 +34,17 @@ int main(int argc, const char * argv[]) {
         NSArray *inputs = getInputsFromFile(method);
         
         SEL dayMethod = NSSelectorFromString([method stringByAppendingString:@":"]);
+        SEL dayPartMethod = NSSelectorFromString([method stringByAppendingString:@":part:"]);
        
-        [aoc performSelector:dayMethod withObject:inputs];
-        
+        if ([aoc respondsToSelector:dayMethod])
+        {
+            [aoc performSelector:dayMethod withObject:inputs];
+        }
+        else
+        {
+            [aoc performSelector:dayPartMethod withObject:inputs withObject:[NSNumber numberWithInt:1]];
+            [aoc performSelector:dayPartMethod withObject:inputs withObject:[NSNumber numberWithInt:2]];
+        }
     }
     return 0;
 }
