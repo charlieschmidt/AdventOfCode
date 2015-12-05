@@ -29,7 +29,7 @@ int main(int argc, const char * argv[]) {
     @autoreleasepool {
         
         AOC *aoc = [[AOC alloc] init];
-        NSString *method = @"day4";
+        NSString *method = @"day5";
         
         NSArray *inputs = getInputsFromFile(method);
         
