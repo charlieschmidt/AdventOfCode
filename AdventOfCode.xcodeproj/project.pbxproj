@@ -37,6 +37,25 @@
 		CB7C74FE1C115CF200F143B4 /* day4.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = day4.m; sourceTree = "<group>"; };
 		CB7C74FF1C12A6D400F143B4 /* day5.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = day5.m; sourceTree = "<group>"; };
 		CB7C75001C1482D000F143B4 /* day6.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = day6.m; sourceTree = "<group>"; };
+		CB7C75011C1489E800F143B4 /* day7.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = day7.m; sourceTree = "<group>"; };
+		CB7C75021C1489E800F143B4 /* day8.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = day8.m; sourceTree = "<group>"; };
+		CB7C75031C1489E800F143B4 /* day9.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = day9.m; sourceTree = "<group>"; };
+		CB7C75041C1489E800F143B4 /* day10.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = day10.m; sourceTree = "<group>"; };
+		CB7C75051C1489E800F143B4 /* day11.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = day11.m; sourceTree = "<group>"; };
+		CB7C75061C1489E800F143B4 /* day12.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = day12.m; sourceTree = "<group>"; };
+		CB7C75071C1489E800F143B4 /* day13.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = day13.m; sourceTree = "<group>"; };
+		CB7C75081C1489E800F143B4 /* day14.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = day14.m; sourceTree = "<group>"; };
+		CB7C75091C1489E800F143B4 /* day15.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = day15.m; sourceTree = "<group>"; };
+		CB7C750A1C1489E800F143B4 /* day16.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = day16.m; sourceTree = "<group>"; };
+		CB7C750B1C1489E800F143B4 /* day17.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = day17.m; sourceTree = "<group>"; };
+		CB7C750C1C1489E800F143B4 /* day18.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = day18.m; sourceTree = "<group>"; };
+		CB7C750D1C1489E800F143B4 /* day19.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = day19.m; sourceTree = "<group>"; };
+		CB7C750E1C1489E800F143B4 /* day20.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = day20.m; sourceTree = "<group>"; };
+		CB7C750F1C1489E800F143B4 /* day21.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = day21.m; sourceTree = "<group>"; };
+		CB7C75101C1489E800F143B4 /* day22.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = day22.m; sourceTree = "<group>"; };
+		CB7C75111C1489E800F143B4 /* day23.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = day23.m; sourceTree = "<group>"; };
+		CB7C75121C1489E800F143B4 /* day24.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = day24.m; sourceTree = "<group>"; };
+		CB7C75131C1489E800F143B4 /* day25.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = day25.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +89,25 @@
 		CB7C74D61C0F349A00F143B4 /* AdventOfCode */ = {
 			isa = PBXGroup;
 			children = (
+				CB7C75011C1489E800F143B4 /* day7.m */,
+				CB7C75021C1489E800F143B4 /* day8.m */,
+				CB7C75031C1489E800F143B4 /* day9.m */,
+				CB7C75041C1489E800F143B4 /* day10.m */,
+				CB7C75051C1489E800F143B4 /* day11.m */,
+				CB7C75061C1489E800F143B4 /* day12.m */,
+				CB7C75071C1489E800F143B4 /* day13.m */,
+				CB7C75081C1489E800F143B4 /* day14.m */,
+				CB7C75091C1489E800F143B4 /* day15.m */,
+				CB7C750A1C1489E800F143B4 /* day16.m */,
+				CB7C750B1C1489E800F143B4 /* day17.m */,
+				CB7C750C1C1489E800F143B4 /* day18.m */,
+				CB7C750D1C1489E800F143B4 /* day19.m */,
+				CB7C750E1C1489E800F143B4 /* day20.m */,
+				CB7C750F1C1489E800F143B4 /* day21.m */,
+				CB7C75101C1489E800F143B4 /* day22.m */,
+				CB7C75111C1489E800F143B4 /* day23.m */,
+				CB7C75121C1489E800F143B4 /* day24.m */,
+				CB7C75131C1489E800F143B4 /* day25.m */,
 				CB7C74D71C0F349A00F143B4 /* main.m */,
 				CB7C74E01C0F372700F143B4 /* aoc.m */,
 				CB7C74E21C0F378A00F143B4 /* aoc.h */,
