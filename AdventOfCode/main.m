@@ -29,12 +29,11 @@ int main(int argc, const char * argv[]) {
     @autoreleasepool {
         
         AOC *aoc = [[AOC alloc] init];
-        NSString *method = @"day5";
+        NSString *method = @"day6";
         
         NSArray *inputs = getInputsFromFile(method);
         
         SEL dayMethod = NSSelectorFromString([method stringByAppendingString:@":"]);
-        SEL dayPartMethod = NSSelectorFromString([method stringByAppendingString:@":part:"]);
        
         if ([aoc respondsToSelector:dayMethod])
         {
@@ -42,6 +41,7 @@ int main(int argc, const char * argv[]) {
         }
         else
         {
+            SEL dayPartMethod = NSSelectorFromString([method stringByAppendingString:@":part:"]);
             [aoc performSelector:dayPartMethod withObject:inputs withObject:[NSNumber numberWithInt:1]];
             [aoc performSelector:dayPartMethod withObject:inputs withObject:[NSNumber numberWithInt:2]];
         }

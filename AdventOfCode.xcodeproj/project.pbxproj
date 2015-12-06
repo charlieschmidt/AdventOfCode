@@ -36,6 +36,7 @@
 		CB7C74FD1C106F4900F143B4 /* day3.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = day3.m; sourceTree = "<group>"; };
 		CB7C74FE1C115CF200F143B4 /* day4.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = day4.m; sourceTree = "<group>"; };
 		CB7C74FF1C12A6D400F143B4 /* day5.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = day5.m; sourceTree = "<group>"; };
+		CB7C75001C1482D000F143B4 /* day6.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = day6.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +78,7 @@
 				CB7C74FD1C106F4900F143B4 /* day3.m */,
 				CB7C74FE1C115CF200F143B4 /* day4.m */,
 				CB7C74FF1C12A6D400F143B4 /* day5.m */,
+				CB7C75001C1482D000F143B4 /* day6.m */,
 			);
 			path = AdventOfCode;
 			sourceTree = "<group>";
@@ -268,6 +270,7 @@
 				CB7C74DD1C0F349A00F143B4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
