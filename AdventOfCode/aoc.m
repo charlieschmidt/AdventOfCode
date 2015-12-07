@@ -7,6 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+
+#import <CommonCrypto/CommonDigest.h>
+
 #import "aoc.h"
 
 #define min(a,b) (a < b ? a : b)

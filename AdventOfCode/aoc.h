@@ -9,8 +9,6 @@
 #ifndef aoc_h
 #define aoc_h
 
-#import <CommonCrypto/CommonDigest.h>
-
 @interface AOC : NSObject
 
 @end
