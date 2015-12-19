@@ -63,6 +63,40 @@
     }
     else
     {
+        int numElements = 0;
+        int numRnAr = 0;
+        int numY = 0;
+        
+        for (int i = 0; i < inputMolecule.length; i++)
+        {
+            char atIndex = [inputMolecule characterAtIndex:i];
+            char nextIndex = ' ';
+            if (i < inputMolecule.length - 1)
+            {
+                nextIndex = [inputMolecule characterAtIndex:i+1];
+            }
+            
+            if ((atIndex == 'R' && nextIndex == 'n') || (atIndex == 'A' && nextIndex == 'r'))
+            {
+                numRnAr++;
+            }
+            else if (atIndex == 'Y')
+            {
+                numY++;
+            }
+            
+            if (isupper(atIndex))
+            {
+                numElements++;
+            }
+        }
+        
+        int s = numElements - numRnAr - (2 * numY) - 1;
+        NSLog(@"Part 2 via askalski: %d - %d - 2 * %d - 1 = %d",numElements, numRnAr, numY,s);
+        
+        
+        
+        
         NSMutableString *newMolecule = [[NSMutableString alloc] initWithString:inputMolecule];
         int steps = 0;
         
