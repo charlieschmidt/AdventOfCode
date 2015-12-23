@@ -45,40 +45,14 @@
     }
     
     int bestManaSpent = 5000000;
-    
-    NSMutableArray *spellList = nil;
-    
-    if (NO)
-    {
-        //bossHp = 14;
-        //bossDamage = 8;
-        //mana = 250;
-        //hp = 10;
-    
-        spellList = [[NSMutableArray alloc] initWithArray:@[@"poison",@"recharge",@"shield",@"poison",@"recharge",@"shield",@"poison",@"recharge",@"shield",@"magic missile",@"poison",@"magic missile"]];
-    }
-    
+  
     for (NSString *spell in [spells allKeys])
     {
-        NSString *spellToPerform = spell;
-        
-        if (spellList != nil)
-        {
-            if ([spellList count] != 0)
-            {
-                spellToPerform = spellList[0];
-                [spellList removeObjectAtIndex:0];
-            }
-            else
-            {
-                spellToPerform = nil;
-            }
-        }
         
         NSMutableArray *spellsPerformed = [[NSMutableArray alloc] init];
     
         [self doRPGTurn:spells
-         spellToPerform:spellToPerform
+         spellToPerform:spell
             hpRemaining:hp
           manaRemaining:mana
                   armor:0
@@ -87,7 +61,6 @@
     currentStatusEffects:nil
          totalManaSpent:0
           bestManaSpent:&bestManaSpent
-              spellList:spellList
         spellsPerformed:spellsPerformed
                hardMode:([part intValue] ==2)
          ];
@@ -108,7 +81,6 @@
     currentStatusEffects:(NSMutableArray*)currentStatusEffects
           totalManaSpent:(int)totalManaSpent
            bestManaSpent:(int*)bestManaSpent
-               spellList:(NSMutableArray *)spellList
          spellsPerformed:(NSArray *)spellsPerformed
                 hardMode:(BOOL)hardMode
 {
@@ -134,18 +106,14 @@
         }
     }
     
-    //NSLog(@"\n\n");
-    //NSLog(@"Player turn p(%d,%d,%d) vs b(%d)\n",hpRemaining,manaRemaining,armor,bossHpRemaining);
     // check status effects
     currentStatusEffects = [self doStatusEffects:currentStatusEffects spells:spells hpRemaining:&hpRemaining manaRemaining:&manaRemaining armor:&armor bossHpRemaining:&bossHpRemaining];
     
     // check if boss is dead
-    //NSLog(@"After status effects, p(%d,%d,%d) vs b(%d)\n",hpRemaining,manaRemaining,armor,bossHpRemaining);
     if (bossHpRemaining <= 0)
     {
         if (totalManaSpent < *bestManaSpent)
         {
-            //NSLog(@"%@ led to boss death at cost of %d (vs %d) (%d,%d,%d)\n",newSpellsPerformed,totalManaSpent,*bestManaSpent,hpRemaining,manaRemaining,armor);
             *bestManaSpent = totalManaSpent;
         }
         return;
@@ -162,7 +130,7 @@
     armor += [spells[spellToPerform][@"armor"] intValue];
     hpRemaining += [spells[spellToPerform][@"hpGain"] intValue];
     bossHpRemaining -= [spells[spellToPerform][@"damage"] intValue];
-    //NSLog(@"cast %@ for %d mana (%d left): %d armor, %d hp, %d damage\n",spellToPerform,[spells[spellToPerform][@"cost"] intValue],manaRemaining,[spells[spellToPerform][@"armor"] intValue],[spells[spellToPerform][@"hpGain"] intValue],[spells[spellToPerform][@"damage"] intValue]);
+
     int turns = [spells[spellToPerform][@"turns"] intValue];
     if (turns != 0)
     {
@@ -180,29 +148,23 @@
     {
         if (totalManaSpent < *bestManaSpent)
         {
-            //NSLog(@"%@ led to boss death at cost of %d (vs %d) (%d,%d,%d)\n",newSpellsPerformed,totalManaSpent,*bestManaSpent,hpRemaining,manaRemaining,armor);
             *bestManaSpent = totalManaSpent;
         }
         return;
     }
-    //NSLog(@"end player turn p(%d,%d,%d) vs b(%d)\n",hpRemaining,manaRemaining,armor,bossHpRemaining);
     // end player turn
     
     
     
     // do boss turn
-    //NSLog(@"Boss turn p(%d,%d,%d) vs b(%d)\n",hpRemaining,manaRemaining,armor,bossHpRemaining);
-    
     // check status effects
     currentStatusEffects = [self doStatusEffects:currentStatusEffects spells:spells hpRemaining:&hpRemaining manaRemaining:&manaRemaining armor:&armor bossHpRemaining:&bossHpRemaining];
     
     // check if boss is dead
-    //NSLog(@"After status effects, p(%d,%d,%d) vs b(%d)\n",hpRemaining,manaRemaining,armor,bossHpRemaining);
     if (bossHpRemaining <= 0)
     {
         if (totalManaSpent < *bestManaSpent)
         {
-            //NSLog(@"%@ led to boss death at cost of %d (vs %d) (%d,%d,%d)\n",newSpellsPerformed,totalManaSpent,*bestManaSpent,hpRemaining,manaRemaining,armor);
             *bestManaSpent = totalManaSpent;
         }
         return;
@@ -210,12 +172,10 @@
     
     // boss attack
     hpRemaining -= max(1,bossDamage - armor);
-    //NSLog(@"boss does %d damage, player now at %d\n",max(1,bossDamage-armor),hpRemaining);
     
     // check if player is dead
     if (hpRemaining <= 0)
     {
-        //NSLog(@"%@ led to player death\n",spellsPerformed);
         return;
     }
     // end boss turn
@@ -238,19 +198,6 @@
     {
         NSString *nextSpellToPerform = spell;
 
-        if (spellList != nil)
-        {
-            if ([spellList count] != 0)
-            {
-                nextSpellToPerform = spellList[0];
-                [spellList removeObjectAtIndex:0];
-            }
-            else
-            {
-                nextSpellToPerform = nil;
-            }
-        }
-        
         BOOL cantPerform = NO;
         for (NSDictionary *effect in currentStatusEffects)
         {
@@ -272,7 +219,6 @@
        currentStatusEffects:currentStatusEffects
              totalManaSpent:totalManaSpent
               bestManaSpent:bestManaSpent
-                  spellList:spellList
             spellsPerformed:newSpellsPerformed
                    hardMode:hardMode
               ];
@@ -285,11 +231,11 @@
 
 
 - (NSMutableArray *)doStatusEffects:(NSArray*)currentStatusEffects
-spells:(NSDictionary*)spells
-hpRemaining:(int*)hpRemaining
-manaRemaining:(int*)manaRemaining
-armor:(int*)armor
-bossHpRemaining:(int*)bossHpRemaining
+                             spells:(NSDictionary*)spells
+                        hpRemaining:(int*)hpRemaining
+                      manaRemaining:(int*)manaRemaining
+                              armor:(int*)armor
+                    bossHpRemaining:(int*)bossHpRemaining
 {
     NSMutableArray *statusEffects;
     if (currentStatusEffects == nil)
@@ -314,22 +260,8 @@ bossHpRemaining:(int*)bossHpRemaining
         
         if (turnsRemaining >= 1)
         {
-            if ([statusEffect[@"name"] isEqualToString:@"poison"])
-            {
-                *bossHpRemaining -= [spells[@"poison"][@"damagePerTurn"] intValue];
-                
-                //NSLog(@"boss takes poison damage for %d, left at %d (%d remaining)\n",[spells[@"poison"][@"damagePerTurn"] intValue],*bossHpRemaining,turnsRemaining-1);
-                
-            }
-            else if ([statusEffect[@"name"] isEqualToString:@"shield"])
-            {
-                //NSLog(@"shield still active (%d remaining)\n",turnsRemaining-1);
-            }
-            else if ([statusEffect[@"name"] isEqualToString:@"recharge"])
-            {
-                *manaRemaining += [spells[@"recharge"][@"manaGainPerTurn"] intValue];
-                //NSLog(@"you recharge %d mana, now at %d (%d remaining)\n",[spells[@"recharge"][@"manaGainPerTurn"] intValue],*manaRemaining,turnsRemaining-1);
-            }
+            *bossHpRemaining -= [spells[statusEffect[@"name"]][@"damagePerTurn"] intValue];
+            *manaRemaining += [spells[statusEffect[@"name"]][@"manaGainPerTurn"] intValue];
             
             turnsRemaining--;
             statusEffect[@"turnsRemaining"] = [NSNumber numberWithInt:turnsRemaining];
@@ -337,11 +269,7 @@ bossHpRemaining:(int*)bossHpRemaining
         }
         else
         {
-            if ([statusEffect[@"name"] isEqualToString:@"shield"])
-            {
-                //NSLog(@"shield wears off\n");
-                *armor -= [spells[@"shield"][@"armor"] intValue];
-            }
+            *armor -= [spells[statusEffect[@"name"]][@"armor"] intValue];
             
             [statusEffectsToRemove addObject:statusEffect];
         }
