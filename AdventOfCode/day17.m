@@ -75,7 +75,6 @@
     }
     
     
-    NSLog(@"%d\n",containersThatWork);
-    
-    NSLog(@"%d with minimum count %lu\n",combosWithMinimumCount, minimumCount);
+    NSLog(@"Part 1: Combinations: %d\n",containersThatWork);
+    NSLog(@"Part 2: Combinations with Minimum Count: %d\n",combosWithMinimumCount);
 }

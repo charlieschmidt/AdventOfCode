@@ -114,5 +114,5 @@
         }
     }
     
-    NSLog(@"Part %@, count on: %d\n",part, countOn);
+    NSLog(@"Part %@: Lights On: %d\n",part,countOn);
 }

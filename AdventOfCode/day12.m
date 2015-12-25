@@ -7,7 +7,7 @@
     
     int sum = [self sumJsonObject:json ignoreRed:([part intValue] == 2)];
     
-    NSLog(@"Part %@, sum: %d\n",part,sum);
+    NSLog(@"Part %@: Sum: %d\n",part,sum);
 }
 
 

@@ -91,8 +91,6 @@
         
     }
     
-    NSLog(@"Found %lu workable group 1s, sorting and checking those now.\n",[workingGroup1s count]);
-
     // now iterate the hashtable, sorted by key asc
     NSArray *sortedGroup1QEs = [[workingGroup1s allKeys] sortedArrayUsingComparator:^(NSString *obj1, NSString *obj2)
     {
@@ -143,11 +141,6 @@
         
         for (int group2Indexes = 1; group2Indexes < num_combos && found == NO; group2Indexes++)
         {
-            if (group2Indexes % 1000000 == 0)
-            {
-                NSLog(@"\tat %f\n",((double)(group2Indexes)) / ((double)num_combos));
-            }
-            
             BOOL usableGroup2Indexes = YES;
             int group2Weight = 0;
             for (int idx = 0; idx < numberOfPackages; idx++)
@@ -173,18 +166,13 @@
             
             if ([part intValue] == 1)
             {
-                NSLog(@"Part %@, minimumQE: %llu\n",part,group1QE);
+                NSLog(@"Part %@: minimumQE: %llu\n",part,group1QE);
                 found = YES;
             }
             else
             {
                 for (int group3Indexes = 1; group3Indexes < num_combos && found == NO; group3Indexes++)
-                {
-                    if (group3Indexes % 1000000 == 0)
-                    {
-                        NSLog(@"\tat %f\n",((double)(group3Indexes)) / ((double)num_combos));
-                    }
-                    
+                {   
                     BOOL usableGroup3Indexes = YES;
                     int group3Weight = 0;
                     for (int idx = 0; idx < numberOfPackages; idx++)
@@ -207,7 +195,7 @@
                         continue;
                     }
                     
-                    NSLog(@"Part %@, minimumQE: %llu\n",part,group1QE);
+                    NSLog(@"Part %@: minimumQE: %llu\n",part,group1QE);
                     found = YES;
                 }
             }

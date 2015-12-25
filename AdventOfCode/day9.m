@@ -40,7 +40,7 @@
     
     
     NSMutableArray *paths = [self generatePermutations:[cityToCityToDistance allKeys]];
-    int shortestDistance = 1000000000;
+    int shortestDistance = INT_MAX;
     NSArray *shortestPath;
     int longestDistance = 0;
     NSArray *longestPath;
@@ -70,8 +70,8 @@
         }
     }
     
-    NSLog(@"%@ has shortest at %d",shortestPath,shortestDistance);
-    NSLog(@"%@ has longest at %d",longestPath,longestDistance);
+    NSLog(@"Part 1: %@ has shortest at %d",shortestPath,shortestDistance);
+    NSLog(@"Part 2: %@ has longest at %d",longestPath,longestDistance);
     
 }
 

@@ -61,7 +61,5 @@
         }
     }
     
-    NSLog(@"Part %@:\n",part);
-    NSLog(@"Total Nice: %ld\n",totalNice);
-    NSLog(@"Total Naughty: %ld\n",totalNaughty);
+    NSLog(@"Part %@: Nice: %ld\n",part,totalNice);
 }

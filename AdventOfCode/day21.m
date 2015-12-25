@@ -100,7 +100,7 @@
         }
     }
     
-    int minCost = 100000;
+    int minCost = INT_MAX;
     int maxCost = 0;
 
     for (NSDictionary *weapon in weapons)
@@ -145,6 +145,6 @@
         }
     }
     
-    NSLog(@"Part 1: minimum cost & win: %d\n",minCost);
-    NSLog(@"Part 2: maximum cost & lose: %d\n",maxCost);
+    NSLog(@"Part 1: Minimum cost & win: %d\n",minCost);
+    NSLog(@"Part 2: Maximum cost & lose: %d\n",maxCost);
 }

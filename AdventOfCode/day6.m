@@ -4,7 +4,6 @@
 #define TURNOFF 3
 
 - (void)day6:(NSArray *)inputs part:(NSNumber *)part;
-
 {
     int lights[1000][1000] = {0};
     
@@ -84,5 +83,5 @@
             totalOn += lights[i][j];
         }
     }
-    NSLog(@"Part %@, Total On/Brightness: %d\n",part,totalOn);
+    NSLog(@"Part %@: Total On/Brightness: %d\n",part,totalOn);
 }

@@ -83,15 +83,27 @@
         }
     }
     
+    NSNumber *maxDistanceFlown = @0;
+    NSNumber *maxPoints = @0;
     for (NSString *reindeerName in [reindeerStats allKeys])
     {
         NSMutableDictionary *reindeer = [reindeerStats objectForKey:reindeerName];
         NSNumber *distanceFlown = [reindeer objectForKey:@"distanceFlown"];
         
         NSNumber *points = [reindeer objectForKey:@"points"];
-        NSLog(@"After %d seconds, %@ flew %@ and has %@ points\n",maxSeconds,reindeerName,distanceFlown,points);
+        
+        if (distanceFlown > maxDistanceFlown)
+        {
+            maxDistanceFlown = distanceFlown;
+        }
+        
+        if (points > maxPoints)
+        {
+            maxPoints = points;
+        }
     }
     
-    
+    NSLog(@"Part 1: Winning Distance: %@\n",maxDistanceFlown);
+    NSLog(@"Part 2: Winning Points: %@\n",maxPoints);
 }
 

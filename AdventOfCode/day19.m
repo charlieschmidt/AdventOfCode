@@ -92,10 +92,10 @@
         }
         
         int s = numElements - numRnAr - (2 * numY) - 1;
-        NSLog(@"Part 2 via askalski: %d - %d - 2 * %d - 1 = %d",numElements, numRnAr, numY,s);
+        NSLog(@"Part 2: %d - %d - 2 * %d - 1 = %d",numElements, numRnAr, numY,s);
         
         
-        
+        /*
         
         NSMutableString *newMolecule = [[NSMutableString alloc] initWithString:inputMolecule];
         int steps = 0;
@@ -146,8 +146,8 @@
             
             steps++;
         }
-        
-        NSLog(@"Part 2: Steps to 'e': %d\n",steps);
+         NSLog(@"Part 2: Steps to 'e': %d\n",steps);
+         */
     }
     
 }

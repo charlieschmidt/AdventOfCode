@@ -245,7 +245,7 @@ typedef enum {
         if ([wireName compare:@"a"] == NSOrderedSame)
         {
             NSNumber *v = [wires valueForKey:wireName];
-            NSLog(@"Part %@, Wire %@: %@\n",part, wireName, v);
+            NSLog(@"Part %@: Wire: %@ -> Value: %@\n",part, wireName, v);
         }
     }
    

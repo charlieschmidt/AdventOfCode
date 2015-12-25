@@ -2,8 +2,8 @@
 - (void)day10:(NSArray *)inputs
 {
     NSString *input = inputs[0];
-
-    NSLog(@"Input: '%@'\n",input);
+    unsigned long part1Answer = 0;
+    unsigned long part2Answer = 0;
     
     for (int iter = 1; iter <= 50; iter++)
     {
@@ -31,8 +31,15 @@
         [new appendFormat:@"%d%c",countOfCurrent,currentDigit];
         input = new;
         
-        NSLog(@"Length after %d iterations, %lu\n",iter, (unsigned long)[new length]);
+        if (iter == 40)
+        {
+            part1Answer = [new length];
+        }
+        part2Answer = [new length];
     }
+    
+    NSLog(@"Part 1: After 40 Iterations: %lu\n",part1Answer);
+    NSLog(@"Part 2: After 50 Iterations: %lu\n",part2Answer);
 }
 
 

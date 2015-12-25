@@ -84,7 +84,7 @@
         }
     }
     
-    NSLog(@"Part %@, %@ has largest at %d",part, largestPath,largestHappiness);
+    NSLog(@"Part %@: %@ has largest at %d",part, largestPath,largestHappiness);
     
 }
 

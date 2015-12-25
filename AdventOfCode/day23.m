@@ -102,6 +102,6 @@
     }
     
     
-    NSLog(@"Part %@: b is %@\n",part, registers[@"b"]);
+    NSLog(@"Part %@: b: %@\n",part, registers[@"b"]);
 }
 

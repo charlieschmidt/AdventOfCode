@@ -29,8 +29,7 @@
             i++;
         }
         
-        
-        NSLog(@"Part %@, key: %d\n",part, i);
+        NSLog(@"Part %@: Input: %@ -> Key: %d\n",part,input,i);
     }
 }
 

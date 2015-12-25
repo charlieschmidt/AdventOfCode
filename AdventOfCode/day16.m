@@ -69,7 +69,7 @@
         
         if (isThisOne)
         {
-            NSLog(@"Part %@: Sue %@\n",part, [information objectForKey:@"sueNumber"]);
+            NSLog(@"Part %@: Sue: %@\n",part, [information objectForKey:@"sueNumber"]);
             break;
         }
     }

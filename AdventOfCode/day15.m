@@ -39,7 +39,7 @@
     
     [self iterateIngredients:ingredients ingredientCounts:ingredientCounts currentIndex:0 maxScore:&maxScore calorieConstraint:calorieConstraint];
     
-    NSLog(@"Part %@, Max Score: %d\n",part, maxScore);
+    NSLog(@"Part %@: Max Score: %d\n",part, maxScore);
 }
 
 - (void)iterateIngredients:(NSMutableArray *)ingredients

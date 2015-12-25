@@ -5,8 +5,6 @@
     
     for (NSString *input in inputs)
     {
-        NSLog(@"Input: %@\n",input);
-     
         int x[numSantas];
         int y[numSantas];
         
@@ -42,7 +40,7 @@
             position++;
         }
         
-        NSLog(@"Unique houses visited by %d santas: %lu\n",numSantas, [houses count]);
+        NSLog(@"Part %d: Unique houses visited by %d santas: %lu\n",numSantas,numSantas,[houses count]);
     }
 
 }

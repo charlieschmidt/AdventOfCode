@@ -44,7 +44,7 @@
         }
     }
     
-    int bestManaSpent = 5000000;
+    int bestManaSpent = INT_MAX;
   
     for (NSString *spell in [spells allKeys])
     {
@@ -66,7 +66,7 @@
          ];
     }
     
-    NSLog(@"Part %@: minimum mana spend & win: %d\n",part,bestManaSpent);
+    NSLog(@"Part %@: Minimum mana spend & win: %d\n",part,bestManaSpent);
 }
 
 
