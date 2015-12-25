@@ -240,13 +240,12 @@ typedef enum {
        
     }
     
-    printf("Part %d\n",[part intValue]);
     for( NSString *wireName in wires )
     {
         if ([wireName compare:@"a"] == NSOrderedSame)
         {
             NSNumber *v = [wires valueForKey:wireName];
-            printf("%s: %u\n",[wireName UTF8String], [v unsignedIntValue]);
+            NSLog(@"Part %@, Wire %@: %@\n",part, wireName, v);
         }
     }
    

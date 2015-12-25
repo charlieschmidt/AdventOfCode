@@ -5,7 +5,7 @@
     
     for (NSString *input in inputs)
     {
-        printf("Input: %s\n",[input UTF8String]);
+        NSLog(@"Input: %@\n",input);
      
         int x[numSantas];
         int y[numSantas];
@@ -42,8 +42,7 @@
             position++;
         }
         
-        printf("Unique houses visited by %d santas: %lu\n",numSantas, (unsigned long)[houses count]);
+        NSLog(@"Unique houses visited by %d santas: %lu\n",numSantas, [houses count]);
     }
-    
-    printf("\n");
+
 }

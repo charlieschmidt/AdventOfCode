@@ -57,7 +57,7 @@
         
     }
     
-    printf("Part 1: %d - %d = %d\n",totalCharacters, totalStringLength, totalCharacters - totalStringLength);
-    printf("Part 2: %d - %d = %d\n",totalNewStringLength, totalCharacters, totalNewStringLength - totalCharacters);
+    NSLog(@"Part 1: %d - %d = %d\n",totalCharacters, totalStringLength, totalCharacters - totalStringLength);
+    NSLog(@"Part 2: %d - %d = %d\n",totalNewStringLength, totalCharacters, totalNewStringLength - totalCharacters);
     
 }

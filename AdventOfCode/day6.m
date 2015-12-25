@@ -76,7 +76,6 @@
         }
     }
     
-    printf("Part %d:\n",[part intValue]);
     int totalOn = 0;
     for (int i = 0; i < 1000; i++)
     {
@@ -85,5 +84,5 @@
             totalOn += lights[i][j];
         }
     }
-    printf("Total On/Brightness: %d\n",totalOn);
+    NSLog(@"Part %@, Total On/Brightness: %d\n",part,totalOn);
 }

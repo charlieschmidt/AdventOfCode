@@ -6,7 +6,7 @@
     
     for (NSString *input in inputs)
     {
-        printf("Input: %s\n",[input UTF8String]);
+        NSLog(@"Input: %@\n",input);
         
         int l,w,h;
         NSInteger squareFeetNeeded = 0;
@@ -19,7 +19,7 @@
         int side3 = h*w;
         
         squareFeetNeeded = side1*2 + side2*2 + side3*2 + min(side1,min(side2,side3));
-        printf("Square feet needed: %ld\n",(long)squareFeetNeeded);
+        NSLog(@"Square feet needed: %ld\n",squareFeetNeeded);
         
         int bow = l*w*h;
         int side1p = l*2 + w*2;
@@ -28,13 +28,12 @@
         
         ribbonNeeded = bow + min(side1p,min(side2p,side3p));
         
-        printf("Ribbon needed: %ld\n",(long)ribbonNeeded);
+        NSLog(@"Ribbon needed: %ld\n",ribbonNeeded);
         
         totalSquareFeetNeeded += squareFeetNeeded;
         totalRibbonNeeded += ribbonNeeded;
     }
     
-    printf("\n");
-    printf("Total square feet needed: %ld\n",(long)totalSquareFeetNeeded);
-    printf("Total ribbon needed: %ld\n",(long)totalRibbonNeeded);
+    NSLog(@"Total square feet needed: %ld\n",totalSquareFeetNeeded);
+    NSLog(@"Total ribbon needed: %ld\n",totalRibbonNeeded);
 }

@@ -15,7 +15,7 @@
        
         for (NSString *input in inputs)
         {
-            //printf("Input: %s\n",[input UTF8String]);
+            //NSLog("Input: %s\n",[input UTF8String]);
             
             
             NSUInteger vowelCount = [vowelsRegex numberOfMatchesInString:input options:0 range:NSMakeRange(0,[input length])];
@@ -25,12 +25,12 @@
             if (vowelCount >= 3 && hasDoubleLetters == YES && hasBadStrings == NO)
             {
                 totalNice++;
-            //    printf("Nice\n");
+            //    NSLog("Nice\n");
             }
             else
             {
                 totalNaughty++;
-            //    printf("Naughty\n");
+            //    NSLog("Naughty\n");
             }
         }
     }
@@ -41,7 +41,7 @@
         
         for (NSString *input in inputs)
         {
-            //printf("Input: %s\n",[input UTF8String]);
+            //NSLog("Input: %s\n",[input UTF8String]);
             
 
         
@@ -51,17 +51,17 @@
             if (hasOneSeparatedByAnother == YES && hasTwoPairs == YES)
             {
                 totalNice++;
-            //    printf("Nice\n");
+            //    NSLog("Nice\n");
             }
             else
             {
                 totalNaughty++;
-            //    printf("Naughty\n");
+            //    NSLog("Naughty\n");
             }
         }
     }
     
-    printf("Part %d:\n",[part intValue]);
-    printf("Total Nice: %ld\n",(long)totalNice);
-    printf("Total Naughty: %ld\n",(long)totalNaughty);
+    NSLog(@"Part %@:\n",part);
+    NSLog(@"Total Nice: %ld\n",totalNice);
+    NSLog(@"Total Naughty: %ld\n",totalNaughty);
 }

@@ -3,7 +3,7 @@
 {
     for (NSString *input in inputs)
     {
-        printf("Input: %s\n",[input UTF8String]);
+        NSLog(@"Input: %@\n",input);
         
         NSInteger len = [input length];
         NSInteger floor = 0;
@@ -31,6 +31,6 @@
             position++;
         }
         
-        printf("Final floor: %ld, enters basement at %ld\n",(long)floor, (long)firstPositionToBasement);
+        NSLog(@"Final floor: %ld, enters basement at %ld\n",floor, firstPositionToBasement);
     }
 }

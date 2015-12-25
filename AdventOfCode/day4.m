@@ -1,7 +1,6 @@
 
 - (void)day4:(NSArray *)inputs part:(NSNumber *)part
 {
-    printf("Part: %d\n",[part intValue]);
     NSString *comparator;
     if ([part intValue] == 1)
     {
@@ -14,7 +13,6 @@
     
     for (NSString *input in inputs)
     {
-        printf("Input: %s\n",[input UTF8String]);
         
         int i = 0;
         BOOL found = NO;
@@ -32,10 +30,8 @@
         }
         
         
-        printf("Key: %d\n",i);
+        NSLog(@"Part %@, key: %d\n",part, i);
     }
-    
-    printf("\n");
 }
 
 - (NSString *)md5For:(NSString *)string
