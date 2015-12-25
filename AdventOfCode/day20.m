@@ -35,7 +35,7 @@
     {
         if (housePresents[i] >= targetValue)
         {
-            NSLog(@"Part %@: House %d has %d\n",part,i+1,housePresents[i]);
+            NSLog(@"Part %@: House %d has %d (>%d)\n",part,i+1,housePresents[i],targetValue);
             break;
         }
     }

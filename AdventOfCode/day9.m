@@ -70,8 +70,8 @@
         }
     }
     
-    NSLog(@"Part 1: %@ has shortest at %d",shortestPath,shortestDistance);
-    NSLog(@"Part 2: %@ has longest at %d",longestPath,longestDistance);
+    NSLog(@"Part 1: %@ has shortest at %d",[shortestPath componentsJoinedByString:@" -> "],shortestDistance);
+    NSLog(@"Part 2: %@ has longest at %d",[longestPath componentsJoinedByString:@" -> "],longestDistance);
     
 }
 

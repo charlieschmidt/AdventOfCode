@@ -166,7 +166,7 @@
             
             if ([part intValue] == 1)
             {
-                NSLog(@"Part %@: minimumQE: %llu\n",part,group1QE);
+                NSLog(@"Part %@: Minimum QE: %llu\n",part,group1QE);
                 found = YES;
             }
             else
@@ -195,7 +195,7 @@
                         continue;
                     }
                     
-                    NSLog(@"Part %@: minimumQE: %llu\n",part,group1QE);
+                    NSLog(@"Part %@: Minimum QE: %llu\n",part,group1QE);
                     found = YES;
                 }
             }
