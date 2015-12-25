@@ -29,30 +29,38 @@ int main(int argc, const char * argv[]) {
     @autoreleasepool {
         
         AOC *aoc = [[AOC alloc] init];
-        NSString *method = @"day17";
         
-        NSArray *inputs = getInputsFromFile(method);
+        for (int day = 1; day <= 25; day++)
+        {
+            NSLog(@"Day %d\n",day);
+            
+            NSString *method = [NSString stringWithFormat:@"day%d",day];
+            
+            NSArray *inputs = getInputsFromFile(method);
+            
+            SEL dayMethod = NSSelectorFromString([method stringByAppendingString:@":"]);
+           
+            if ([aoc respondsToSelector:dayMethod])
+            {
+                IMP imp = [aoc methodForSelector:dayMethod];
+                
+                void (*func)(id, SEL, NSArray*) = (void *)imp;
+                func(aoc,dayMethod,inputs);
+            }
+            else
+            {
+                SEL dayPartMethod = NSSelectorFromString([method stringByAppendingString:@":part:"]);
+                
+                IMP imp = [aoc methodForSelector:dayPartMethod];
+                
+                void (*func)(id, SEL, NSArray *, NSNumber *) = (void *)imp;
+                func(aoc,dayMethod,inputs,@1);
+                func(aoc,dayMethod,inputs,@2);
+                
+            }
+            NSLog(@"\n\n");
+        }
         
-        SEL dayMethod = NSSelectorFromString([method stringByAppendingString:@":"]);
-       
-        if ([aoc respondsToSelector:dayMethod])
-        {
-            IMP imp = [aoc methodForSelector:dayMethod];
-            
-            void (*func)(id, SEL, NSArray*) = (void *)imp;
-            func(aoc,dayMethod,inputs);
-        }
-        else
-        {
-            SEL dayPartMethod = NSSelectorFromString([method stringByAppendingString:@":part:"]);
-            
-            IMP imp = [aoc methodForSelector:dayPartMethod];
-            
-            void (*func)(id, SEL, NSArray *, NSNumber *) = (void *)imp;
-            func(aoc,dayMethod,inputs,@1);
-            func(aoc,dayMethod,inputs,@2);
-            
-        }
     }
     return 0;
 }
