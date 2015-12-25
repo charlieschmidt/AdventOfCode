@@ -26,6 +26,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		CB701A761C2D973B00739398 /* util.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = util.h; sourceTree = "<group>"; };
 		CB7C74D41C0F349A00F143B4 /* AdventOfCode */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = AdventOfCode; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB7C74D71C0F349A00F143B4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		CB7C74E01C0F372700F143B4 /* aoc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = aoc.m; sourceTree = "<group>"; };
@@ -117,6 +118,7 @@
 				CB7C75121C1489E800F143B4 /* day24.m */,
 				CB7C75131C1489E800F143B4 /* day25.m */,
 				CB7C74D71C0F349A00F143B4 /* main.m */,
+				CB701A761C2D973B00739398 /* util.h */,
 			);
 			path = AdventOfCode;
 			sourceTree = "<group>";

@@ -11,13 +11,7 @@
 #import <CommonCrypto/CommonDigest.h>
 
 #import "aoc.h"
-
-#define min(a,b) (a < b ? a : b)
-
-#define max(a,b) (a > b ? a : b)
-
-#define bit_is_on(ba,bn) (((ba) & (1 << bn)) ? YES : NO)
-#define set_bit(ba,bn) (ba |= (1 << bn))
+#import "util.h"
 
 @implementation AOC
 
