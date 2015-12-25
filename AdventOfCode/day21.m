@@ -59,7 +59,7 @@
                          @"armor":@0},
                           ];
     
-    uint64_t num_combos = 1ull << [rings count];    // 2**count
+    uint64_t num_combos = 1ull << rings.count;    // 2**count
     NSMutableArray *ringCombos = [NSMutableArray new];
     for (uint64_t mask = 1; mask < num_combos; mask++) {
         NSMutableIndexSet *indexes = [NSMutableIndexSet indexSet];
@@ -88,15 +88,15 @@
         
         if ([[input substringToIndex:3] isEqualToString:@"Hit"])
         {
-            bossHp = [[f numberFromString:number] intValue];
+            bossHp = [f numberFromString:number].intValue;
         }
         if ([[input substringToIndex:3] isEqualToString:@"Dam"])
         {
-            bossDamage = [[f numberFromString:number] intValue];
+            bossDamage = [f numberFromString:number].intValue;
         }
         if ([[input substringToIndex:3] isEqualToString:@"Arm"])
         {
-            bossArmor = [[f numberFromString:number] intValue];
+            bossArmor = [f numberFromString:number].intValue;
         }
     }
     

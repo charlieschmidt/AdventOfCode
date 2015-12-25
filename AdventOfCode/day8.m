@@ -7,13 +7,13 @@
     
     for (NSString *input in inputs)
     {
-        totalCharacters += [input length];
+        totalCharacters += input.length;
         
-        NSString *insideInput = [input substringWithRange:NSMakeRange(1,[input length]-2)];
+        NSString *insideInput = [input substringWithRange:NSMakeRange(1,input.length-2)];
         NSString *newString = @"\"\\\"";
         
         int i = 0;
-        unsigned long left = [insideInput length];
+        unsigned long left = insideInput.length;
         while (left > 0)
         {
             NSString *chars = [insideInput substringWithRange:NSMakeRange(i,min(left,2))];
@@ -53,7 +53,7 @@
         }
         
         newString = [newString stringByAppendingString:@"\\\"\""];
-        totalNewStringLength += [newString length];
+        totalNewStringLength += newString.length;
         
     }
     

@@ -22,7 +22,7 @@
     
     for (NSString *input in inputs)
     {
-        NSArray *matches = [regex matchesInString:input options:0 range:NSMakeRange(0,[input length])];
+        NSArray *matches = [regex matchesInString:input options:0 range:NSMakeRange(0,input.length)];
         for (NSTextCheckingResult *result in matches)
         {
             NSNumber *sueNumber = [f numberFromString:[input substringWithRange:[result rangeAtIndex:1]]];
@@ -34,30 +34,30 @@
             NSNumber *countOfThing3 = [f numberFromString:[input substringWithRange:[result rangeAtIndex:7]]];
             
             NSMutableDictionary *information = [[NSMutableDictionary alloc] init];
-            [information setObject:sueNumber forKey:@"sueNumber"];
-            [information setObject:countOfThing1 forKey:thing1];
-            [information setObject:countOfThing2 forKey:thing2];
-            [information setObject:countOfThing3 forKey:thing3];
+            information[@"sueNumber"] = sueNumber;
+            information[thing1] = countOfThing1;
+            information[thing2] = countOfThing2;
+            information[thing3] = countOfThing3;
             [sueInformations addObject:information];
             
         }
     }
     
-    BOOL fuzzy = ([part intValue] == 2);
+    BOOL fuzzy = (part.intValue == 2);
     
-    for (int i = 0; i < [sueInformations count]; i++)
+    for (int i = 0; i < sueInformations.count; i++)
     {
         BOOL isThisOne = YES;
-        NSMutableDictionary *information = [sueInformations objectAtIndex:i];
+        NSMutableDictionary *information = sueInformations[i];
     
-        for (NSString *key in [information allKeys])
+        for (NSString *key in information.allKeys)
         {
             if ([key isEqualToString:@"sueNumber"])
             {
                 continue;
             }
-            NSNumber *informationValue = [information objectForKey:key];
-            NSNumber *giftValue = [giftInformation objectForKey:key];
+            NSNumber *informationValue = information[key];
+            NSNumber *giftValue = giftInformation[key];
             BOOL b = [self compareInformation:key giftValue:giftValue sueValue:informationValue fuzzy:fuzzy];
 
             if (b == NO)
@@ -69,7 +69,7 @@
         
         if (isThisOne)
         {
-            NSLog(@"Part %@: Sue: %@\n",part, [information objectForKey:@"sueNumber"]);
+            NSLog(@"Part %@: Sue: %@\n",part, information[@"sueNumber"]);
             break;
         }
     }
@@ -85,12 +85,12 @@
     {
         if ([key isEqualToString:@"cats"] || [key isEqualToString:@"trees"])
         {
-            return ([giftValue intValue] < [sueValue intValue]);
+            return (giftValue.intValue < sueValue.intValue);
         }
         
         if ([key isEqualToString:@"pomeranians"] || [key isEqualToString:@"goldfish"])
         {
-            return ([giftValue intValue] > [sueValue intValue]);
+            return (giftValue.intValue > sueValue.intValue);
         }
         
         return [giftValue isEqualToNumber:sueValue];

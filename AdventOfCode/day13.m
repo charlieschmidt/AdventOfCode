@@ -10,7 +10,7 @@
     
     for (NSString *input in inputs)
     {
-        NSArray *matches = [regex matchesInString:input options:0 range:NSMakeRange(0,[input length])];
+        NSArray *matches = [regex matchesInString:input options:0 range:NSMakeRange(0,input.length)];
         for (NSTextCheckingResult *result in matches)
         {
             NSString *sourcePerson = [input substringWithRange:[result rangeAtIndex:1]];
@@ -20,62 +20,62 @@
             
             if ([gainLoseString isEqualToString:@"lose"] == YES)
             {
-                units = [NSNumber numberWithInt:[units intValue] * -1];
+                units = @(units.intValue * -1);
             }
             
             NSMutableDictionary *sourcePersonDict = [personToPersonHappiness valueForKey:sourcePerson];
             if (sourcePersonDict == nil)
             {
                 sourcePersonDict = [[NSMutableDictionary alloc] init];
-                [personToPersonHappiness setObject:sourcePersonDict forKey:sourcePerson];
+                personToPersonHappiness[sourcePerson] = sourcePersonDict;
             }
             
-            [sourcePersonDict setObject:units forKey:destPerson];
+            sourcePersonDict[destPerson] = units;
             
         }
     }
-    if ([part intValue] == 2)
+    if (part.intValue == 2)
     {
         NSMutableDictionary *youPersonDict = [[NSMutableDictionary alloc] init];
-        for (NSString *person in [personToPersonHappiness allKeys])
+        for (NSString *person in personToPersonHappiness.allKeys)
         {
             NSMutableDictionary *personDict = [personToPersonHappiness valueForKey:person];
-            [personDict setObject:[NSNumber numberWithInt:0] forKey:@"you"];
-            [youPersonDict setObject:[NSNumber numberWithInt:0] forKey:person];
+            personDict[@"you"] = @0;
+            youPersonDict[person] = @0;
         }
-        [personToPersonHappiness setObject:youPersonDict forKey:@"you"];
+        personToPersonHappiness[@"you"] = youPersonDict;
     }
     
-    NSMutableArray *paths = [self generatePermutations:[personToPersonHappiness allKeys]];
+    NSMutableArray *paths = [self generatePermutations:personToPersonHappiness.allKeys];
     
     int largestHappiness = 0;
     NSArray *largestPath;
     for (NSArray *path in paths)
     {
         int pathHappiness = 0;
-        for (int i = 0; i < [path count]-1; i++)
+        for (int i = 0; i < path.count-1; i++)
         {
             NSString *sourcePerson = path[i];
             NSString *destPerson = path[i+1];
             NSString *pathString = [NSString stringWithFormat:@"%@.%@",sourcePerson,destPerson];
             NSNumber *happiness = [personToPersonHappiness valueForKeyPath:pathString];
-            pathHappiness += [happiness intValue];
+            pathHappiness += happiness.intValue;
             
             pathString = [NSString stringWithFormat:@"%@.%@",destPerson,sourcePerson];
             happiness = [personToPersonHappiness valueForKeyPath:pathString];
-            pathHappiness += [happiness intValue];
+            pathHappiness += happiness.intValue;
         }
         
         
         NSString *sourcePerson = path[0];
-        NSString *destPerson = path[[path count]-1];
+        NSString *destPerson = path[path.count-1];
         NSString *pathString = [NSString stringWithFormat:@"%@.%@",sourcePerson,destPerson];
         NSNumber *happiness = [personToPersonHappiness valueForKeyPath:pathString];
-        pathHappiness += [happiness intValue];
+        pathHappiness += happiness.intValue;
         
         pathString = [NSString stringWithFormat:@"%@.%@",destPerson,sourcePerson];
         happiness = [personToPersonHappiness valueForKeyPath:pathString];
-        pathHappiness += [happiness intValue];
+        pathHappiness += happiness.intValue;
         
         if (largestHappiness < pathHappiness)
         {

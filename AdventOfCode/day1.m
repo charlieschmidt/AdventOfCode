@@ -3,7 +3,7 @@
 {
     for (NSString *input in inputs)
     {   
-        NSInteger len = [input length];
+        NSInteger len = input.length;
         NSInteger floor = 0;
         NSInteger position = 1;
         NSInteger firstPositionToBasement = -1;

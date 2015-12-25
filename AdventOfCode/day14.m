@@ -10,7 +10,7 @@
     
     for (NSString *input in inputs)
     {
-        NSArray *matches = [regex matchesInString:input options:0 range:NSMakeRange(0,[input length])];
+        NSArray *matches = [regex matchesInString:input options:0 range:NSMakeRange(0,input.length)];
         for (NSTextCheckingResult *result in matches)
         {
             NSString *reindeerName = [input substringWithRange:[result rangeAtIndex:1]];
@@ -19,13 +19,13 @@
             NSNumber *restPeriod = [f numberFromString:[input substringWithRange:[result rangeAtIndex:4]]];
             
             NSMutableDictionary *reindeer = [[NSMutableDictionary alloc] init];
-            [reindeer setObject:speed forKey:@"speed"];
-            [reindeer setObject:flyingPeriod forKey:@"flyingPeriod"];
-            [reindeer setObject:restPeriod forKey:@"restPeriod"];
+            reindeer[@"speed"] = speed;
+            reindeer[@"flyingPeriod"] = flyingPeriod;
+            reindeer[@"restPeriod"] = restPeriod;
             
-            [reindeer setObject:[NSNumber numberWithInt:0] forKey:@"points"];
+            reindeer[@"points"] = @0;
             
-            [reindeerStats setObject:reindeer forKey:reindeerName];
+            reindeerStats[reindeerName] = reindeer;
             
         }
     }
@@ -34,32 +34,32 @@
     
     for (int i = 0; i <= maxSeconds; i++)
     {
-        for (NSString *reindeerName in [reindeerStats allKeys])
+        for (NSString *reindeerName in reindeerStats.allKeys)
         {
-            NSMutableDictionary *reindeer = [reindeerStats objectForKey:reindeerName];
+            NSMutableDictionary *reindeer = reindeerStats[reindeerName];
             
-            NSNumber *speed = [reindeer objectForKey:@"speed"];
-            NSNumber *flyingPeriod = [reindeer objectForKey:@"flyingPeriod"];
-            NSNumber *restPeriod = [reindeer objectForKey:@"restPeriod"];
-            int distanceFlown = [[reindeer objectForKey:@"distanceFlown"] intValue];
+            NSNumber *speed = reindeer[@"speed"];
+            NSNumber *flyingPeriod = reindeer[@"flyingPeriod"];
+            NSNumber *restPeriod = reindeer[@"restPeriod"];
+            int distanceFlown = [reindeer[@"distanceFlown"] intValue];
         
-            int relativeSeconds = i % ([restPeriod intValue] + [flyingPeriod intValue]);
+            int relativeSeconds = i % (restPeriod.intValue + flyingPeriod.intValue);
             
-            if (relativeSeconds < [flyingPeriod intValue])
+            if (relativeSeconds < flyingPeriod.intValue)
             {
-                distanceFlown += [speed intValue];
+                distanceFlown += speed.intValue;
             }
             
-            [reindeer setObject:[NSNumber numberWithInt:distanceFlown] forKey:@"distanceFlown"];
+            reindeer[@"distanceFlown"] = @(distanceFlown);
         }
         
         int furthestDistance = 0;
         
-        for (NSString *reindeerName in [reindeerStats allKeys])
+        for (NSString *reindeerName in reindeerStats.allKeys)
         {
-            NSMutableDictionary *reindeer = [reindeerStats objectForKey:reindeerName];
+            NSMutableDictionary *reindeer = reindeerStats[reindeerName];
             
-            int distanceFlown = [[reindeer objectForKey:@"distanceFlown"] intValue];
+            int distanceFlown = [reindeer[@"distanceFlown"] intValue];
         
             if (distanceFlown >= furthestDistance)
             {
@@ -68,29 +68,29 @@
         }
         
         
-        for (NSString *reindeerName in [reindeerStats allKeys])
+        for (NSString *reindeerName in reindeerStats.allKeys)
         {
-            NSMutableDictionary *reindeer = [reindeerStats objectForKey:reindeerName];
+            NSMutableDictionary *reindeer = reindeerStats[reindeerName];
             
-            int distanceFlown = [[reindeer objectForKey:@"distanceFlown"] intValue];
+            int distanceFlown = [reindeer[@"distanceFlown"] intValue];
             
             if (distanceFlown == furthestDistance)
             {
-                int points = [[reindeer objectForKey:@"points"] intValue];
+                int points = [reindeer[@"points"] intValue];
                 points++;
-                [reindeer setObject:[NSNumber numberWithInt:points] forKey:@"points"];
+                reindeer[@"points"] = @(points);
             }
         }
     }
     
     NSNumber *maxDistanceFlown = @0;
     NSNumber *maxPoints = @0;
-    for (NSString *reindeerName in [reindeerStats allKeys])
+    for (NSString *reindeerName in reindeerStats.allKeys)
     {
-        NSMutableDictionary *reindeer = [reindeerStats objectForKey:reindeerName];
-        NSNumber *distanceFlown = [reindeer objectForKey:@"distanceFlown"];
+        NSMutableDictionary *reindeer = reindeerStats[reindeerName];
+        NSNumber *distanceFlown = reindeer[@"distanceFlown"];
         
-        NSNumber *points = [reindeer objectForKey:@"points"];
+        NSNumber *points = reindeer[@"points"];
         
         if (distanceFlown > maxDistanceFlown)
         {

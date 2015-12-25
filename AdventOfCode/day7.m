@@ -16,14 +16,14 @@ typedef enum {
     
     BOOL firstTime = YES;
     int inputCounter = 0;
-    while ([mInputs count])
+    while (mInputs.count)
     {
-        if (inputCounter >= [mInputs count])
+        if (inputCounter >= mInputs.count)
         {
             inputCounter = 0;
         }
         
-        NSString *input = [mInputs objectAtIndex:inputCounter];
+        NSString *input = mInputs[inputCounter];
         BOOL wasAbleToProcess = NO;
         
         
@@ -61,9 +61,9 @@ typedef enum {
                 char lhs[10];
                 char rhs[10];
                 char dest[10];
-                sscanf([input UTF8String],"%s AND %s -> %s",lhs,rhs,dest);
-                NSString *lhss = [NSString stringWithCString:lhs encoding:NSUTF8StringEncoding];
-                NSString *rhss = [NSString stringWithCString:rhs encoding:NSUTF8StringEncoding];
+                sscanf(input.UTF8String,"%s AND %s -> %s",lhs,rhs,dest);
+                NSString *lhss = @(lhs);
+                NSString *rhss = @(rhs);
                 
                 NSNumber *lhsv = [nf numberFromString:lhss];
                 if (lhsv == nil)
@@ -80,9 +80,9 @@ typedef enum {
                 if (lhsv != nil & rhsv != nil)
                 {
                     wasAbleToProcess = YES;
-                    uint16_t v = [lhsv unsignedIntValue] & [rhsv unsignedIntValue];
+                    uint16_t v = lhsv.unsignedIntValue & rhsv.unsignedIntValue;
                     NSNumber *destv = [NSNumber numberWithUnsignedInt:v];
-                    [wires setValue:destv forKey:[NSString stringWithCString:dest encoding:NSUTF8StringEncoding]];
+                    [wires setValue:destv forKey:@(dest)];
                 }
                 break;
             }
@@ -91,9 +91,9 @@ typedef enum {
                 char lhs[10];
                 char rhs[10];
                 char dest[10];
-                sscanf([input UTF8String],"%s OR %s -> %s",lhs,rhs,dest);
-                NSString *lhss = [NSString stringWithCString:lhs encoding:NSUTF8StringEncoding];
-                NSString *rhss = [NSString stringWithCString:rhs encoding:NSUTF8StringEncoding];
+                sscanf(input.UTF8String,"%s OR %s -> %s",lhs,rhs,dest);
+                NSString *lhss = @(lhs);
+                NSString *rhss = @(rhs);
                 
                 NSNumber *lhsv = [nf numberFromString:lhss];
                 if (lhsv == nil)
@@ -110,9 +110,9 @@ typedef enum {
                 if (lhsv != nil & rhsv != nil)
                 {
                     wasAbleToProcess = YES;
-                    uint16_t v = [lhsv unsignedIntValue] | [rhsv unsignedIntValue];
+                    uint16_t v = lhsv.unsignedIntValue | rhsv.unsignedIntValue;
                     NSNumber *destv = [NSNumber numberWithUnsignedInt:v];
-                    [wires setValue:destv forKey:[NSString stringWithCString:dest encoding:NSUTF8StringEncoding]];
+                    [wires setValue:destv forKey:@(dest)];
                 }
                 
                 break;
@@ -122,16 +122,16 @@ typedef enum {
                 char lhs[10];
                 uint16_t by;
                 char dest[10];
-                sscanf([input UTF8String],"%s LSHIFT %hu -> %s",lhs,&by,dest);
+                sscanf(input.UTF8String,"%s LSHIFT %hu -> %s",lhs,&by,dest);
                 
-                NSNumber *lhsv = [wires valueForKey:[NSString stringWithCString:lhs encoding:NSUTF8StringEncoding]];
+                NSNumber *lhsv = [wires valueForKey:@(lhs)];
                 
                 if (lhsv != nil)
                 {
                     wasAbleToProcess = YES;
-                    uint16_t v = [lhsv unsignedIntValue] << by;
+                    uint16_t v = lhsv.unsignedIntValue << by;
                     NSNumber *destv = [NSNumber numberWithUnsignedInt:v];
-                    [wires setValue:destv forKey:[NSString stringWithCString:dest encoding:NSUTF8StringEncoding]];
+                    [wires setValue:destv forKey:@(dest)];
                 }
                 
                 break;
@@ -141,16 +141,16 @@ typedef enum {
                 char lhs[10];
                 uint16_t by;
                 char dest[10];
-                sscanf([input UTF8String],"%s RSHIFT %hu -> %s",lhs,&by,dest);
+                sscanf(input.UTF8String,"%s RSHIFT %hu -> %s",lhs,&by,dest);
                 
-                NSNumber *lhsv = [wires valueForKey:[NSString stringWithCString:lhs encoding:NSUTF8StringEncoding]];
+                NSNumber *lhsv = [wires valueForKey:@(lhs)];
                 
                 if (lhsv != nil)
                 {
                     wasAbleToProcess = YES;
-                    uint16_t v = [lhsv unsignedIntValue] >> by;
+                    uint16_t v = lhsv.unsignedIntValue >> by;
                     NSNumber *destv = [NSNumber numberWithUnsignedInt:v];
-                    [wires setValue:destv forKey:[NSString stringWithCString:dest encoding:NSUTF8StringEncoding]];
+                    [wires setValue:destv forKey:@(dest)];
                 }
                 
                 break;
@@ -159,16 +159,16 @@ typedef enum {
             {
                 char lhs[10];
                 char dest[10];
-                sscanf([input UTF8String],"NOT %s -> %s",lhs,dest);
+                sscanf(input.UTF8String,"NOT %s -> %s",lhs,dest);
                 
-                NSNumber *lhsv = [wires valueForKey:[NSString stringWithCString:lhs encoding:NSUTF8StringEncoding]];
+                NSNumber *lhsv = [wires valueForKey:@(lhs)];
                 
                 if (lhsv != nil)
                 {
                     wasAbleToProcess = YES;
-                    uint16_t v = (~[lhsv unsignedIntValue]);
+                    uint16_t v = (~lhsv.unsignedIntValue);
                     NSNumber *destv = [NSNumber numberWithUnsignedInt:v];
-                    [wires setValue:destv forKey:[NSString stringWithCString:dest encoding:NSUTF8StringEncoding]];
+                    [wires setValue:destv forKey:@(dest)];
                 }
                 
                 break;
@@ -178,7 +178,7 @@ typedef enum {
                 char v[10];
 //                uint16_t v;
                 char dest[10];
-                sscanf([input UTF8String],"%s -> %s",v,dest);
+                sscanf(input.UTF8String,"%s -> %s",v,dest);
                 
                 BOOL isNumeric = YES;
                 for (int i = 0; v[i] != '\0'; i++)
@@ -198,12 +198,12 @@ typedef enum {
                 }
                 else
                 {
-                    destv = [wires valueForKey:[NSString stringWithCString:v encoding:NSUTF8StringEncoding]];
+                    destv = [wires valueForKey:@(v)];
                 }
                 
                 if (destv != nil)
                 {
-                    NSString *dests = [NSString stringWithCString:dest encoding:NSUTF8StringEncoding];
+                    NSString *dests = @(dest);
                     if ([wires valueForKey:dests] == nil)
                     {
                         [wires setValue:destv forKey:dests];
@@ -228,7 +228,7 @@ typedef enum {
         }
         
         
-        if ([part intValue] == 2 && [mInputs count] == 0 && firstTime == YES)
+        if (part.intValue == 2 && mInputs.count == 0 && firstTime == YES)
         {
             firstTime = NO;
             NSNumber *av = [wires valueForKey:@"a"];

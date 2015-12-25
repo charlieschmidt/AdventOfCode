@@ -12,7 +12,7 @@
     {
         inputMolecule = input;
         
-        NSArray *matches = [regex matchesInString:input options:0 range:NSMakeRange(0,[input length])];
+        NSArray *matches = [regex matchesInString:input options:0 range:NSMakeRange(0,input.length)];
         for (NSTextCheckingResult *result in matches)
         {
             NSString *key = [input substringWithRange:[result rangeAtIndex:1]];
@@ -23,11 +23,11 @@
         }
     }
     
-    if ([part intValue] == 1)
+    if (part.intValue == 1)
     {
         NSMutableDictionary *newMolecules = [[NSMutableDictionary alloc] init];
         
-        for (int i = 0; i < [replacementKeys count]; i++)
+        for (int i = 0; i < replacementKeys.count; i++)
         {
             NSString *key = replacementKeys[i];
             NSString *value = replacementValues[i];
@@ -48,7 +48,7 @@
                     [newMolecule replaceCharactersInRange:foundRange withString:value];
 
                     //NSLog(@"\tnew molecule: %@\n",newMolecule);
-                    [newMolecules setObject:newMolecule forKey:newMolecule];
+                    newMolecules[newMolecule] = newMolecule;
                     searchRange.location = foundRange.location + foundRange.length;
                 }
                 else
@@ -59,7 +59,7 @@
             }
         };
 
-        NSLog(@"Part 1: New Molecules: %lu\n", (unsigned long)[newMolecules count]);
+        NSLog(@"Part 1: New Molecules: %lu\n", (unsigned long)newMolecules.count);
     }
     else
     {

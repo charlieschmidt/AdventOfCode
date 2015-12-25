@@ -5,7 +5,7 @@
     NSData *data = [input dataUsingEncoding:NSUTF8StringEncoding];
     id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
     
-    int sum = [self sumJsonObject:json ignoreRed:([part intValue] == 2)];
+    int sum = [self sumJsonObject:json ignoreRed:(part.intValue == 2)];
     
     NSLog(@"Part %@: Sum: %d\n",part,sum);
 }

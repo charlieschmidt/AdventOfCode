@@ -1,7 +1,7 @@
 
 - (void)day3:(NSArray *)inputs part:(NSNumber *)part
 {
-    int numSantas = [part intValue];
+    int numSantas = part.intValue;
     
     for (NSString *input in inputs)
     {
@@ -13,10 +13,10 @@
             x[i] = y[i] = 0;
         }
         
-        NSInteger len = [input length];
+        NSInteger len = input.length;
         NSInteger position = 1;
         NSMutableDictionary *houses = [[NSMutableDictionary alloc] init];
-        [houses setObject:@"1" forKey:@"0x0"];
+        houses[@"0x0"] = @"1";
         
         while (position <= len)
         {
@@ -35,12 +35,12 @@
         
             NSString *houseKey = [NSString stringWithFormat:@"%dx%d",x[whichSanta],y[whichSanta]];
             
-            [houses setObject:@"1" forKey:houseKey];
+            houses[houseKey] = @"1";
             
             position++;
         }
         
-        NSLog(@"Part %d: Unique houses visited by %d santas: %lu\n",numSantas,numSantas,[houses count]);
+        NSLog(@"Part %d: Unique houses visited by %d santas: %lu\n",numSantas,numSantas,houses.count);
     }
 
 }

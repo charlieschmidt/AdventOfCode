@@ -14,7 +14,7 @@
     }
     
     
-    uint64_t num_combos = 1ull << [containers count];    // 2**count
+    uint64_t num_combos = 1ull << containers.count;    // 2**count
     NSMutableArray *combos = [NSMutableArray new];
     for (uint64_t mask = 1; mask < num_combos; mask++) {
         NSMutableIndexSet *indexes = [NSMutableIndexSet indexSet];
@@ -28,27 +28,27 @@
     }
     
     int containersThatWork = 0;
-    unsigned long minimumCount = [containers count];
+    unsigned long minimumCount = containers.count;
     
-    for (int i = 0; i < [combos count]; i++)
+    for (int i = 0; i < combos.count; i++)
     {
-        NSArray *subContainers = [combos objectAtIndex:i];
+        NSArray *subContainers = combos[i];
         int volume = 0;
         
-        for (int j = 0; j < [subContainers count]; j++)
+        for (int j = 0; j < subContainers.count; j++)
         {
-            NSNumber *number = [subContainers objectAtIndex:j];
+            NSNumber *number = subContainers[j];
             
-            volume += [number intValue];
+            volume += number.intValue;
         }
         
         if (volume == volumeGoal)
         {
             containersThatWork++;
             
-            if ([subContainers count] < minimumCount)
+            if (subContainers.count < minimumCount)
             {
-                minimumCount = [subContainers count];
+                minimumCount = subContainers.count;
             }
         }
         
@@ -56,19 +56,19 @@
     
     int combosWithMinimumCount = 0;
     
-    for (int i = 0; i < [combos count]; i++)
+    for (int i = 0; i < combos.count; i++)
     {
-        NSArray *subContainers = [combos objectAtIndex:i];
+        NSArray *subContainers = combos[i];
         int volume = 0;
         
-        for (int j = 0; j < [subContainers count]; j++)
+        for (int j = 0; j < subContainers.count; j++)
         {
-            NSNumber *number = [subContainers objectAtIndex:j];
+            NSNumber *number = subContainers[j];
             
-            volume += [number intValue];
+            volume += number.intValue;
         }
         
-        if (volume == volumeGoal && [subContainers count] == minimumCount)
+        if (volume == volumeGoal && subContainers.count == minimumCount)
         {
             combosWithMinimumCount++;
         }

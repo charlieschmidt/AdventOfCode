@@ -14,7 +14,7 @@
 -(NSString*)incrementPassword:(NSString *)password
 {
     NSMutableString *ms = [NSMutableString stringWithString:password];
-    for (long i = [ms length] - 1; i >= 0; i--)
+    for (long i = ms.length - 1; i >= 0; i--)
     {
         if ([ms characterAtIndex:i] == 'z')
         {
@@ -48,7 +48,7 @@
         }
         
         BOOL hasTriplet = NO;
-        for (int i = 0; i < [nextPassword length] -2; i++)
+        for (int i = 0; i < nextPassword.length -2; i++)
         {
             if ([nextPassword characterAtIndex:i] == [nextPassword characterAtIndex:i+1]-1 &&
                 [nextPassword characterAtIndex:i] == [nextPassword characterAtIndex:i+2]-2)
@@ -58,9 +58,9 @@
             }
         }
         
-        NSArray* matches = [regex matchesInString:nextPassword options:0 range:NSMakeRange(0, [nextPassword length])];
+        NSArray* matches = [regex matchesInString:nextPassword options:0 range:NSMakeRange(0, nextPassword.length)];
         
-        if ([matches count] < 2)
+        if (matches.count < 2)
         {
             continue;
         }

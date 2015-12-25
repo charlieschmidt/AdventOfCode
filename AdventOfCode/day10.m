@@ -11,7 +11,7 @@
         char currentDigit = [input characterAtIndex:0];
         int countOfCurrent = 0;
         
-        for (int i = 0; i < [input length]; i++)
+        for (int i = 0; i < input.length; i++)
         {
             char nextDigit = [input characterAtIndex:i];
             
@@ -33,9 +33,9 @@
         
         if (iter == 40)
         {
-            part1Answer = [new length];
+            part1Answer = new.length;
         }
-        part2Answer = [new length];
+        part2Answer = new.length;
     }
     
     NSLog(@"Part 1: After 40 Iterations: %lu\n",part1Answer);

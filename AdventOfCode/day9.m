@@ -10,7 +10,7 @@
     
     for (NSString *input in inputs)
     {
-        NSArray *matches = [regex matchesInString:input options:0 range:NSMakeRange(0,[input length])];
+        NSArray *matches = [regex matchesInString:input options:0 range:NSMakeRange(0,input.length)];
         for (NSTextCheckingResult *result in matches)
         {
             NSString *sourceCity = [input substringWithRange:[result rangeAtIndex:1]];
@@ -22,24 +22,24 @@
             if (sourceCityDict == nil)
             {
                 sourceCityDict = [[NSMutableDictionary alloc] init];
-                [cityToCityToDistance setObject:sourceCityDict forKey:sourceCity];
+                cityToCityToDistance[sourceCity] = sourceCityDict;
             }
             
-            [sourceCityDict setObject:distance forKey:destCity];
+            sourceCityDict[destCity] = distance;
             
             NSMutableDictionary *destCityDict = [cityToCityToDistance valueForKey:destCity];
             if (destCityDict == nil)
             {
                 destCityDict = [[NSMutableDictionary alloc] init];
-                [cityToCityToDistance setObject:destCityDict forKey:destCity];
+                cityToCityToDistance[destCity] = destCityDict;
             }
             
-            [destCityDict setObject:distance forKey:sourceCity];
+            destCityDict[sourceCity] = distance;
         }
     }
     
     
-    NSMutableArray *paths = [self generatePermutations:[cityToCityToDistance allKeys]];
+    NSMutableArray *paths = [self generatePermutations:cityToCityToDistance.allKeys];
     int shortestDistance = INT_MAX;
     NSArray *shortestPath;
     int longestDistance = 0;
@@ -47,13 +47,13 @@
     for (NSArray *path in paths)
     {
         int pathDistance = 0;
-        for (int i = 0; i < [path count]-1; i++)
+        for (int i = 0; i < path.count-1; i++)
         {
             NSString *sourceCity = path[i];
             NSString *destCity = path[i+1];
             NSString *pathString = [NSString stringWithFormat:@"%@.%@",sourceCity,destCity];
             NSNumber *distance = [cityToCityToDistance valueForKeyPath:pathString];
-            pathDistance += [distance intValue];
+            pathDistance += distance.intValue;
         }
         
         if (shortestDistance > pathDistance)
@@ -77,17 +77,16 @@
 
 - (NSMutableArray *)generatePermutations:(NSArray *)array
 {
-    
     NSMutableArray *permutations = nil;
     
-    for (int i = 0; i < [array count]; i++)
+    for (int i = 0; i < array.count; i++)
     {
         if (permutations == nil)
         {
             permutations = [NSMutableArray array];
             for (NSString *character in array)
             {
-                [permutations addObject:[NSArray arrayWithObject:character]];
+                [permutations addObject:@[character]];
             }
         }
         else
@@ -109,6 +108,7 @@
             }            
         }
     }
+    
     return permutations;
 }
 

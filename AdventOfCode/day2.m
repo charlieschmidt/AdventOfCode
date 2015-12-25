@@ -10,7 +10,7 @@
         NSInteger squareFeetNeeded = 0;
         NSInteger ribbonNeeded = 0;
         
-        sscanf([input UTF8String],"%dx%dx%d",&l,&w,&h);
+        sscanf(input.UTF8String,"%dx%dx%d",&l,&w,&h);
         
         int side1 = l*w;
         int side2 = l*h;

@@ -16,24 +16,24 @@
         if ([input compare:@"toggle" options:0 range:NSMakeRange(0,6)] == NSOrderedSame)
         {
             command = TOGGLE;
-            sscanf([input UTF8String],"toggle %d,%d through %d,%d",&x1,&y1,&x2,&y2);
+            sscanf(input.UTF8String,"toggle %d,%d through %d,%d",&x1,&y1,&x2,&y2);
         }
         else if ([input compare:@"turn on" options:0 range:NSMakeRange(0,7)] == NSOrderedSame)
         {
             command = TURNON;
-            sscanf([input UTF8String],"turn on %d,%d through %d,%d",&x1,&y1,&x2,&y2);
+            sscanf(input.UTF8String,"turn on %d,%d through %d,%d",&x1,&y1,&x2,&y2);
         }
         else
         {
             command = TURNOFF;
-            sscanf([input UTF8String],"turn off %d,%d through %d,%d",&x1,&y1,&x2,&y2);
+            sscanf(input.UTF8String,"turn off %d,%d through %d,%d",&x1,&y1,&x2,&y2);
         }
         
         for (int i = x1; i <= x2; i++)
         {
             for (int j = y1; j <= y2; j++)
             {
-                if ([part intValue] == 1)
+                if (part.intValue == 1)
                 {
                     switch (command)
                     {

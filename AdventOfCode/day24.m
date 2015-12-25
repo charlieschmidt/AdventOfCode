@@ -8,21 +8,21 @@
     NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
     f.numberStyle = NSNumberFormatterDecimalStyle;
     
-    for (NSString *input in [[inputs reverseObjectEnumerator] allObjects])
+    for (NSString *input in [inputs reverseObjectEnumerator].allObjects)
     {
         NSNumber *n = [f numberFromString:input];
     
-        totalWeight += [n intValue];
+        totalWeight += n.intValue;
         [packageWeights addObject:n];
     }
     
     
-    unsigned long numberOfPackages = [packageWeights count];
+    unsigned long numberOfPackages = packageWeights.count;
     
     int targetGroupWeight;
     int maxPackagesPerGroup = 0;
     
-    if ([part intValue] == 1)
+    if (part.intValue == 1)
     {
         targetGroupWeight = totalWeight / 3;
         maxPackagesPerGroup = numberOfPackages / 3.0; // the most packages the min group could have is a # packages / # of divisions; if it was more than that - then all the min groups would have to have more and we'd have more packages than # packages
@@ -87,21 +87,21 @@
         
         // if the weight is good, then save the weight and QE for the second round
         NSString *key = [NSString stringWithFormat:@"%lu:%llu",group1Count,group1QE];
-        [workingGroup1s setObject:[NSNumber numberWithInt:group1Indexes] forKey:key];
+        workingGroup1s[key] = @(group1Indexes);
         
     }
     
     // now iterate the hashtable, sorted by key asc
-    NSArray *sortedGroup1QEs = [[workingGroup1s allKeys] sortedArrayUsingComparator:^(NSString *obj1, NSString *obj2)
+    NSArray *sortedGroup1QEs = [workingGroup1s.allKeys sortedArrayUsingComparator:^(NSString *obj1, NSString *obj2)
     {
         
         NSArray *values1 = [obj1 componentsSeparatedByString:@":"];
-        unsigned long obj1Count = [[f numberFromString:values1[0]] unsignedLongLongValue];
-        unsigned long long obj1QE = [[f numberFromString:values1[1]] unsignedLongLongValue];
+        unsigned long obj1Count = [f numberFromString:values1[0]].unsignedLongLongValue;
+        unsigned long long obj1QE = [f numberFromString:values1[1]].unsignedLongLongValue;
         
         NSArray *values2 = [obj2 componentsSeparatedByString:@":"];
-        unsigned long obj2Count = [[f numberFromString:values2[0]] unsignedLongLongValue];
-        unsigned long long obj2QE = [[f numberFromString:values2[1]] unsignedLongLongValue];
+        unsigned long obj2Count = [f numberFromString:values2[0]].unsignedLongLongValue;
+        unsigned long long obj2QE = [f numberFromString:values2[1]].unsignedLongLongValue;
 
         if (obj1Count > obj2Count)
         {
@@ -128,12 +128,12 @@
     
     // iterate it, once we find a second group that has the appropriate weight, we know the 3rd group does and whatever the QE is at that point is the winner (cause QE sorts ascending)
     BOOL found = NO;
-    for (int i = 0; i < [sortedGroup1QEs count] && found == NO; i++)
+    for (int i = 0; i < sortedGroup1QEs.count && found == NO; i++)
     {
         NSString *key = sortedGroup1QEs[i];
         NSArray *values = [key componentsSeparatedByString:@":"];
-        unsigned long long group1QE = [[f numberFromString:values[1]] unsignedLongLongValue];
-        int group1Indexes = [[workingGroup1s objectForKey:key] intValue];
+        unsigned long long group1QE = [f numberFromString:values[1]].unsignedLongLongValue;
+        int group1Indexes = [workingGroup1s[key] intValue];
         
         
         //group1QE = 11846773891;
@@ -164,7 +164,7 @@
             }
             
             
-            if ([part intValue] == 1)
+            if (part.intValue == 1)
             {
                 NSLog(@"Part %@: Minimum QE: %llu\n",part,group1QE);
                 found = YES;

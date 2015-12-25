@@ -10,7 +10,7 @@
     
     for (NSString *input in inputs)
     {
-        NSArray *matches = [regex matchesInString:input options:0 range:NSMakeRange(0,[input length])];
+        NSArray *matches = [regex matchesInString:input options:0 range:NSMakeRange(0,input.length)];
         for (NSTextCheckingResult *result in matches)
         {
             NSString *ingredientName = [input substringWithRange:[result rangeAtIndex:1]];
@@ -21,21 +21,21 @@
             NSNumber *calories = [f numberFromString:[input substringWithRange:[result rangeAtIndex:6]]];
             
             NSMutableDictionary *ingredient = [[NSMutableDictionary alloc] init];
-            [ingredient setObject:ingredientName forKey:@"ingredientName"];
-            [ingredient setObject:capacity forKey:@"capacity"];
-            [ingredient setObject:durability forKey:@"durability"];
-            [ingredient setObject:flavor forKey:@"flavor"];
-            [ingredient setObject:texture forKey:@"texture"];
-            [ingredient setObject:calories forKey:@"calories"];
+            ingredient[@"ingredientName"] = ingredientName;
+            ingredient[@"capacity"] = capacity;
+            ingredient[@"durability"] = durability;
+            ingredient[@"flavor"] = flavor;
+            ingredient[@"texture"] = texture;
+            ingredient[@"calories"] = calories;
             
             [ingredients addObject:ingredient];
             
         }
     }
     
-    int ingredientCounts[[ingredients count]];
+    int ingredientCounts[ingredients.count];
     int maxScore = 0;
-    BOOL calorieConstraint = ([part intValue] == 2);
+    BOOL calorieConstraint = (part.intValue == 2);
     
     [self iterateIngredients:ingredients ingredientCounts:ingredientCounts currentIndex:0 maxScore:&maxScore calorieConstraint:calorieConstraint];
     
@@ -54,7 +54,7 @@
         currentTotal += ingredientCounts[i];
     }
     
-    if (currentIndex == [ingredients count])
+    if (currentIndex == ingredients.count)
     {
         if (currentTotal > 100)
         {
@@ -85,7 +85,7 @@
         return;
     }
     
-    if (currentIndex < [ingredients count])
+    if (currentIndex < ingredients.count)
     {
         for (int i = 0; i <= 100 - currentTotal; i++)
         {
@@ -101,11 +101,11 @@
                      property:(NSString *)property
 {
     int s = 0;
-    for (int i = 0; i < [ingredients count]; i++)
+    for (int i = 0; i < ingredients.count; i++)
     {
-        NSMutableDictionary *d = [ingredients objectAtIndex:i];
-        NSNumber *n = [d objectForKey:property];
-        s += [n intValue] * ingredientCounts[i];
+        NSMutableDictionary *d = ingredients[i];
+        NSNumber *n = d[property];
+        s += n.intValue * ingredientCounts[i];
     }
 
     return max(s,0);

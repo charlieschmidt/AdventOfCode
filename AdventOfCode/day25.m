@@ -13,8 +13,8 @@
     NSArray *matches = [regex matchesInString:inputs[0] options:0 range:NSMakeRange(0,[inputs[0] length])];
     for (NSTextCheckingResult *result in matches)
     {
-        targetRow = [[f numberFromString:[inputs[0] substringWithRange:[result rangeAtIndex:1]]] intValue];
-        targetColumn = [[f numberFromString:[inputs[0] substringWithRange:[result rangeAtIndex:2]]] intValue];
+        targetRow = [f numberFromString:[inputs[0] substringWithRange:[result rangeAtIndex:1]]].intValue;
+        targetColumn = [f numberFromString:[inputs[0] substringWithRange:[result rangeAtIndex:2]]].intValue;
     }
     
     

@@ -2,7 +2,7 @@
 - (void)day4:(NSArray *)inputs part:(NSNumber *)part
 {
     NSString *comparator;
-    if ([part intValue] == 1)
+    if (part.intValue == 1)
     {
         comparator = @"00000";
     }
@@ -21,7 +21,7 @@
         {
             NSString *secretKey = [NSString stringWithFormat:@"%@%d",input,i];
             NSString *md5 = [self md5For:secretKey];
-            if ([[md5 substringToIndex:[comparator length]] compare:comparator] == NSOrderedSame)
+            if ([[md5 substringToIndex:comparator.length] compare:comparator] == NSOrderedSame)
             {
                 found = YES;
                 break;
@@ -35,7 +35,7 @@
 
 - (NSString *)md5For:(NSString *)string
 {
-    const char *ptr = [string UTF8String];
+    const char *ptr = string.UTF8String;
 
     // Create byte array of unsigned chars
     unsigned char md5Buffer[CC_MD5_DIGEST_LENGTH];

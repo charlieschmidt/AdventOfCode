@@ -6,7 +6,7 @@
     f.numberStyle = NSNumberFormatterDecimalStyle;
     
     NSNumber *number = [f numberFromString:inputs[0]];
-    int targetValue = [number intValue];
+    int targetValue = number.intValue;
     
     int *housePresents = malloc(sizeof(int)*targetValue);
     memset(housePresents,0,sizeof(int)*targetValue);
@@ -14,7 +14,7 @@
     for (int elf = 1; elf <= targetValue; elf++)
     {
         
-        if ([part intValue] == 1)
+        if (part.intValue == 1)
         {
             for (int house = elf; house <= targetValue; house += elf)
             {

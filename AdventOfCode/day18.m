@@ -15,7 +15,7 @@
         }
     }
     
-    if ([part intValue] == 2)
+    if (part.intValue == 2)
     {
         lights[0][0] = lights[dimensions-1][0] = lights[0][dimensions-1] = lights[dimensions-1][dimensions-1] = '#';
     }
@@ -94,7 +94,7 @@
                     }
                 }
                 
-                if ([part intValue] == 2)
+                if (part.intValue == 2)
                 {
                     lights[0][0] = lights[dimensions-1][0] = lights[0][dimensions-1] = lights[dimensions-1][dimensions-1] = '#';
                 }

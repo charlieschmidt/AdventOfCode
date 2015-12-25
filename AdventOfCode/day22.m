@@ -36,17 +36,17 @@
         
         if ([[input substringToIndex:3] isEqualToString:@"Hit"])
         {
-            bossHp = [[f numberFromString:number] intValue];
+            bossHp = [f numberFromString:number].intValue;
         }
         if ([[input substringToIndex:3] isEqualToString:@"Dam"])
         {
-            bossDamage = [[f numberFromString:number] intValue];
+            bossDamage = [f numberFromString:number].intValue;
         }
     }
     
     int bestManaSpent = INT_MAX;
   
-    for (NSString *spell in [spells allKeys])
+    for (NSString *spell in spells.allKeys)
     {
         
         NSMutableArray *spellsPerformed = [[NSMutableArray alloc] init];
@@ -62,7 +62,7 @@
          totalManaSpent:0
           bestManaSpent:&bestManaSpent
         spellsPerformed:spellsPerformed
-               hardMode:([part intValue] ==2)
+               hardMode:(part.intValue ==2)
          ];
     }
     
@@ -136,7 +136,7 @@
     {
         NSMutableDictionary *statusEffect = [[NSMutableDictionary alloc] init];
         statusEffect[@"name"] = spellToPerform;
-        statusEffect[@"turnsRemaining"] = [NSNumber numberWithInt:turns];
+        statusEffect[@"turnsRemaining"] = @(turns);
         statusEffect[@"manaGainPerTurn"] = spells[spellToPerform][@"manaGainPerTurn"];
         statusEffect[@"damagePerTurn"] = spells[spellToPerform][@"damagePerTurn"];
         
@@ -188,13 +188,13 @@
     }
     
     // try to exit early, hopefully
-    if ([spellsPerformed count] >= 15)
+    if (spellsPerformed.count >= 15)
     {
         return;
     }
     
     // do next turn
-    for (NSString *spell in [spells allKeys])
+    for (NSString *spell in spells.allKeys)
     {
         NSString *nextSpellToPerform = spell;
 
@@ -264,7 +264,7 @@
             *manaRemaining += [spells[statusEffect[@"name"]][@"manaGainPerTurn"] intValue];
             
             turnsRemaining--;
-            statusEffect[@"turnsRemaining"] = [NSNumber numberWithInt:turnsRemaining];
+            statusEffect[@"turnsRemaining"] = @(turnsRemaining);
             
         }
         else
