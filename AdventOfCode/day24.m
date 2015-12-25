@@ -86,29 +86,56 @@
         }
         
         // if the weight is good, then save the weight and QE for the second round
-        [workingGroup1s setObject:[NSNumber numberWithInt:group1Indexes] forKey:[NSNumber numberWithUnsignedLongLong:group1QE]];
+        NSString *key = [NSString stringWithFormat:@"%lu:%llu",group1Count,group1QE];
+        [workingGroup1s setObject:[NSNumber numberWithInt:group1Indexes] forKey:key];
         
     }
     
     NSLog(@"Found %lu workable group 1s, sorting and checking those now.\n",[workingGroup1s count]);
-    
+
     // now iterate the hashtable, sorted by key asc
-    NSArray *sortedGroup1QEs = [[workingGroup1s allKeys] sortedArrayUsingComparator:^(id obj1, id obj2) {
-        if (obj1 > obj2)
-            return NSOrderedDescending;
-        else if (obj1 < obj2)
-            return NSOrderedAscending;
+    NSArray *sortedGroup1QEs = [[workingGroup1s allKeys] sortedArrayUsingComparator:^(NSString *obj1, NSString *obj2)
+    {
         
-        return NSOrderedSame;
+        NSArray *values1 = [obj1 componentsSeparatedByString:@":"];
+        unsigned long obj1Count = [[f numberFromString:values1[0]] unsignedLongLongValue];
+        unsigned long long obj1QE = [[f numberFromString:values1[1]] unsignedLongLongValue];
+        
+        NSArray *values2 = [obj2 componentsSeparatedByString:@":"];
+        unsigned long obj2Count = [[f numberFromString:values2[0]] unsignedLongLongValue];
+        unsigned long long obj2QE = [[f numberFromString:values2[1]] unsignedLongLongValue];
+
+        if (obj1Count > obj2Count)
+        {
+            return NSOrderedDescending;
+        }
+        else if (obj1Count < obj2Count)
+        {
+            return NSOrderedAscending;
+        }
+        else if (obj1QE > obj2QE)
+        {
+            return NSOrderedDescending;
+        }
+        else if (obj1QE < obj2QE)
+        {
+            return NSOrderedAscending;
+        }
+        else
+        {
+            return NSOrderedSame;
+        }
+        
     }];
     
     // iterate it, once we find a second group that has the appropriate weight, we know the 3rd group does and whatever the QE is at that point is the winner (cause QE sorts ascending)
     BOOL found = NO;
     for (int i = 0; i < [sortedGroup1QEs count] && found == NO; i++)
     {
-        NSNumber *g1qe = sortedGroup1QEs[i];
-        unsigned long long group1QE = [g1qe unsignedLongLongValue];
-        int group1Indexes = [[workingGroup1s objectForKey:g1qe] intValue];
+        NSString *key = sortedGroup1QEs[i];
+        NSArray *values = [key componentsSeparatedByString:@":"];
+        unsigned long long group1QE = [[f numberFromString:values[1]] unsignedLongLongValue];
+        int group1Indexes = [[workingGroup1s objectForKey:key] intValue];
         
         
         //group1QE = 11846773891;
