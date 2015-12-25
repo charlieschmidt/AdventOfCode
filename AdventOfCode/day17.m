@@ -28,7 +28,7 @@
     }
     
     int containersThatWork = 0;
-    int minimumCount = [containers count];
+    unsigned long minimumCount = [containers count];
     
     for (int i = 0; i < [combos count]; i++)
     {
@@ -77,5 +77,5 @@
     
     NSLog(@"%d\n",containersThatWork);
     
-    NSLog(@"%d with minimum count %d\n",combosWithMinimumCount, minimumCount);
+    NSLog(@"%d with minimum count %lu\n",combosWithMinimumCount, minimumCount);
 }

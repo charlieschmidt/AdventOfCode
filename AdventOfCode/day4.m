@@ -41,12 +41,21 @@
 - (NSString *)md5For:(NSString *)string
 {
     const char *ptr = [string UTF8String];
-    
+
     // Create byte array of unsigned chars
     unsigned char md5Buffer[CC_MD5_DIGEST_LENGTH];
     
+    unsigned long l = strlen(ptr);
+    if (l > UINT_MAX)
+    {
+        NSLog(@"fuck if i know how we're handling this now :)\n");
+        return nil;
+    }
+    
+    CC_LONG len = 0;
+    len = (unsigned int)l;
     // Create 16 byte MD5 hash value, store in buffer
-    CC_MD5(ptr, strlen(ptr), md5Buffer);
+    CC_MD5(ptr, len, md5Buffer);
     
     // Convert MD5 value in the buffer to NSString of hex values
     NSMutableString *output = [NSMutableString stringWithCapacity:CC_MD5_DIGEST_LENGTH * 2];

@@ -13,7 +13,7 @@
         NSString *newString = @"\"\\\"";
         
         int i = 0;
-        int left = [insideInput length];
+        unsigned long left = [insideInput length];
         while (left > 0)
         {
             NSString *chars = [insideInput substringWithRange:NSMakeRange(i,min(left,2))];

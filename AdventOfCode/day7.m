@@ -246,7 +246,7 @@ typedef enum {
         if ([wireName compare:@"a"] == NSOrderedSame)
         {
             NSNumber *v = [wires valueForKey:wireName];
-            printf("%s: %hu\n",[wireName UTF8String], [v unsignedIntValue]);
+            printf("%s: %u\n",[wireName UTF8String], [v unsignedIntValue]);
         }
     }
    

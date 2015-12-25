@@ -50,7 +50,7 @@
 -(NSString*)nextPassword:(NSString *)password
 {
     NSMutableString *ms = [NSMutableString stringWithString:password];
-    for (int i = [ms length] - 1; i >= 0; i--)
+    for (long i = [ms length] - 1; i >= 0; i--)
     {
         if ([ms characterAtIndex:i] == 'z')
         {

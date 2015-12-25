@@ -37,13 +37,21 @@ int main(int argc, const char * argv[]) {
        
         if ([aoc respondsToSelector:dayMethod])
         {
-            [aoc performSelector:dayMethod withObject:inputs];
+            IMP imp = [aoc methodForSelector:dayMethod];
+            
+            void (*func)(id, SEL, NSArray*) = (void *)imp;
+            func(aoc,dayMethod,inputs);
         }
         else
         {
             SEL dayPartMethod = NSSelectorFromString([method stringByAppendingString:@":part:"]);
-            [aoc performSelector:dayPartMethod withObject:inputs withObject:[NSNumber numberWithInt:1]];
-            [aoc performSelector:dayPartMethod withObject:inputs withObject:[NSNumber numberWithInt:2]];
+            
+            IMP imp = [aoc methodForSelector:dayPartMethod];
+            
+            void (*func)(id, SEL, NSArray *, NSNumber *) = (void *)imp;
+            func(aoc,dayMethod,inputs,@1);
+            func(aoc,dayMethod,inputs,@2);
+            
         }
     }
     return 0;

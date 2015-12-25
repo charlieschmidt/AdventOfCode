@@ -73,9 +73,9 @@
     }
     
     
-    int bossHp;
-    int bossDamage;
-    int bossArmor;
+    int bossHp = 10;
+    int bossDamage = 8;
+    int bossArmor = 2;
 
     
     
