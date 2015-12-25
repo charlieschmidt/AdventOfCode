@@ -1,280 +1,190 @@
 
+
 - (void)day24:(NSArray *)inputs part:(NSNumber *)part
 {
     NSMutableArray *packageWeights = [[NSMutableArray alloc] init];
     int totalWeight = 0;
-    int numberOfPackingMethodsFound = 0;
-    unsigned long minimumCountInGroup = [inputs count];
-    unsigned long long minimumQE = ULONG_LONG_MAX;
     
     NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
     f.numberStyle = NSNumberFormatterDecimalStyle;
     
-    for (int i = 0; i < [inputs count]; i++)
+    for (NSString *input in [[inputs reverseObjectEnumerator] allObjects])
     {
-        NSNumber *n = [f numberFromString:inputs[i]];
+        NSNumber *n = [f numberFromString:input];
     
         totalWeight += [n intValue];
         [packageWeights addObject:n];
     }
     
-    int groupWeight;
+    
+    unsigned long numberOfPackages = [packageWeights count];
+    
+    int targetGroupWeight;
+    int maxPackagesPerGroup = 0;
     
     if ([part intValue] == 1)
     {
-        groupWeight = totalWeight / 3;
+        targetGroupWeight = totalWeight / 3;
+        maxPackagesPerGroup = numberOfPackages / 3.0; // the most packages the min group could have is a # packages / # of divisions; if it was more than that - then all the min groups would have to have more and we'd have more packages than # packages
     }
     else
     {
-        groupWeight = totalWeight / 4;
+        targetGroupWeight = totalWeight / 4;
+        maxPackagesPerGroup = numberOfPackages / 4.0;
     }
     
-    uint64_t num_combos = 1ull << [packageWeights count];    // 2**count
-    for (uint64_t mask = 1; mask < num_combos; mask++)
+    // find the minimum packages the min group could have.  add the input numbers in descending order - once we're over the target weight, we know that is the _fewest_ packages the group could have, cause its using the biggest input numbers
+    int j = 0;
+    int minPackagesPerGroup = 0;
+    for (int i = 0; i < numberOfPackages; i++)
     {
-        NSMutableIndexSet *group1Indexes = [[NSMutableIndexSet alloc] init];
-        
-        for (uint64_t i = 0; i < 64; i++)
+        j += [packageWeights[i] intValue];
+        minPackagesPerGroup++;
+        if (j > targetGroupWeight)
         {
-            if (mask & (1ull << i))
+            break;
+        }
+    }
+    
+    // first thing we're going to do is find all the initial groups that equal the target weight, and store them plus their QE in a hash table
+    NSMutableDictionary *workingGroup1s = [[NSMutableDictionary alloc] init];
+    unsigned long long num_combos = 1ull << numberOfPackages;
+    for (int group1Indexes = 1; group1Indexes < num_combos; group1Indexes++)
+    {
+        unsigned long group1Count = 0;
+        
+        for (int idx = 0; idx < numberOfPackages; idx++)
+        {
+            if (bit_is_on(group1Indexes,idx))
             {
-                [group1Indexes addIndex:i];
+                group1Count++;
             }
         }
-    
-        __block int group1Weight = 0;
-        __block unsigned long long group1QE = 1;
-        unsigned long group1Count = [group1Indexes count];
-        [packageWeights enumerateObjectsUsingBlock:^(NSNumber *o, NSUInteger idx, BOOL *stop)
-        {
-            if ([group1Indexes containsIndex:idx])
-            {
-                group1QE *= [o intValue];
-                group1Weight += [o intValue];
-            }
-        }];
         
-        if (group1Weight != groupWeight)
+        // if the number in our guess isnt between the available ranges, then give up
+        if (group1Count > maxPackagesPerGroup || group1Count < minPackagesPerGroup)
         {
             continue;
         }
         
-        NSLog(@"found group1: %@\n",[packageWeights objectsAtIndexes:group1Indexes]);
-        
-        
-        uint64_t num_combos2 = 1ull << [packageWeights count];    // 2**count
-        for (uint64_t mask2 = mask+1; mask2 < num_combos2; mask2++)
+        // calc weight and QE
+        int group1Weight = 0;
+        unsigned long long group1QE = 1;
+        for (int idx = 0; idx < numberOfPackages; idx++)
         {
-            NSMutableIndexSet *group2Indexes = [[NSMutableIndexSet alloc] init];
-            BOOL usableIndexSetFor2 = YES;
-            
-            for (uint64_t i2 = 0; i2 < 64; i2++)
+             if (bit_is_on(group1Indexes,idx))
+             {
+                 int i = [packageWeights[idx] intValue];
+                 group1QE *= i;
+                 group1Weight += i;
+             }
+        }
+        
+        if (group1Weight != targetGroupWeight)
+        {
+            continue;
+        }
+        
+        // if the weight is good, then save the weight and QE for the second round
+        [workingGroup1s setObject:[NSNumber numberWithInt:group1Indexes] forKey:[NSNumber numberWithUnsignedLongLong:group1QE]];
+        
+    }
+    
+    NSLog(@"Found %lu workable group 1s, sorting and checking those now.\n",[workingGroup1s count]);
+    
+    // now iterate the hashtable, sorted by key asc
+    NSArray *sortedGroup1QEs = [[workingGroup1s allKeys] sortedArrayUsingComparator:^(id obj1, id obj2) {
+        if (obj1 > obj2)
+            return NSOrderedDescending;
+        else if (obj1 < obj2)
+            return NSOrderedAscending;
+        
+        return NSOrderedSame;
+    }];
+    
+    // iterate it, once we find a second group that has the appropriate weight, we know the 3rd group does and whatever the QE is at that point is the winner (cause QE sorts ascending)
+    BOOL found = NO;
+    for (int i = 0; i < [sortedGroup1QEs count] && found == NO; i++)
+    {
+        NSNumber *g1qe = sortedGroup1QEs[i];
+        unsigned long long group1QE = [g1qe unsignedLongLongValue];
+        int group1Indexes = [[workingGroup1s objectForKey:g1qe] intValue];
+        
+        
+        //group1QE = 11846773891;
+        //group1Indexes = 268435543;
+        
+        for (int group2Indexes = 1; group2Indexes < num_combos && found == NO; group2Indexes++)
+        {
+            if (group2Indexes % 1000000 == 0)
             {
-                if (mask2 & (1ull << i2))
+                NSLog(@"\tat %f\n",((double)(group2Indexes)) / ((double)num_combos));
+            }
+            
+            BOOL usableGroup2Indexes = YES;
+            int group2Weight = 0;
+            for (int idx = 0; idx < numberOfPackages; idx++)
+            {
+                if (bit_is_on(group2Indexes,idx) == YES )
                 {
-                    if ([group1Indexes containsIndex:i2] == YES)
+                    if (bit_is_on(group1Indexes,idx) == YES)
                     {
-                        usableIndexSetFor2 = NO;
+                        usableGroup2Indexes = NO;
                         break;
                     }
-                    [group2Indexes addIndex:i2];
+                    int v = [packageWeights[idx] intValue];
+                    group2Weight += v;
                 }
             }
-
-            if (usableIndexSetFor2 == NO)
+            
+            
+            if (usableGroup2Indexes == NO || group2Weight != targetGroupWeight)
             {
                 continue;
             }
-            
-            __block int group2Weight = 0;
-            __block unsigned long long group2QE = 1;
-            unsigned long group2Count = [group2Indexes count];
-            [packageWeights enumerateObjectsUsingBlock:^(NSNumber *o, NSUInteger idx, BOOL *stop)
-             {
-                 if ([group2Indexes containsIndex:idx])
-                 {
-                     group2Weight += [o intValue];
-                     group2QE *= [o intValue];
-                 }
-             }];
-            
-            if (group2Weight != groupWeight)
-            {
-                continue;
-            }
-            
-            
-            NSLog(@"found group2: %@\n",[packageWeights objectsAtIndexes:group2Indexes]);
             
             
             if ([part intValue] == 1)
             {
-                __block int group3Weight = 0;
-                __block unsigned long long group3QE = 1;
-                unsigned long group3Count = [packageWeights count] - group2Count - group1Count;
-                [packageWeights enumerateObjectsUsingBlock:^(NSNumber *o, NSUInteger idx, BOOL *stop)
-                 {
-                     if ([group2Indexes containsIndex:idx] == NO && [group1Indexes containsIndex:idx] == NO)
-                     {
-                         group3Weight += [o intValue];
-                         group3QE *= [o intValue];
-                     }
-                 }];
-                
-                if (group3Weight != groupWeight)
-                {
-                    continue;
-                }
-                
-                numberOfPackingMethodsFound++;
-                
-                if (group1Count <= minimumCountInGroup)
-                {
-                    minimumCountInGroup = group1Count;
-                    
-                    if (group1QE < minimumQE)
-                    {
-                        minimumQE = group1QE;
-                        NSLog(@"found new min QE: %llu at %lu\n",minimumQE,minimumCountInGroup);
-                    }
-                }
-                
-                if (group2Count <= minimumCountInGroup)
-                {
-                    minimumCountInGroup = group2Count;
-                    
-                    if (group2QE < minimumQE)
-                    {
-                        minimumQE = group2QE;
-                        NSLog(@"found new min QE: %llu at %lu\n",minimumQE,minimumCountInGroup);
-                    }
-                }
-                
-                if (group3Count <= minimumCountInGroup)
-                {
-                    minimumCountInGroup = group3Count;
-                    
-                    if (group3QE < minimumQE)
-                    {
-                        minimumQE = group3QE;
-                        NSLog(@"found new min QE: %llu at %lu\n",minimumQE,minimumCountInGroup);
-                    }
-                }
+                NSLog(@"Part %@, minimumQE: %llu\n",@1,group1QE);
+                found = YES;
             }
             else
             {
-                uint64_t num_combos3 = 1ull << [packageWeights count];    // 2**count
-                for (uint64_t mask3 = mask2+1; mask3 < num_combos3; mask3++)
+                for (int group3Indexes = 1; group3Indexes < num_combos && found == NO; group3Indexes++)
                 {
-                    NSMutableIndexSet *group3Indexes = [[NSMutableIndexSet alloc] init];
-                    BOOL usableIndexSetFor3 = YES;
-                    
-                    for (uint64_t i3 = 0; i3 < 64; i3++)
+                    if (group3Indexes % 1000000 == 0)
                     {
-                        if (mask3 & (1ull << i3))
+                        NSLog(@"\tat %f\n",((double)(group3Indexes)) / ((double)num_combos));
+                    }
+                    
+                    BOOL usableGroup3Indexes = YES;
+                    int group3Weight = 0;
+                    for (int idx = 0; idx < numberOfPackages; idx++)
+                    {
+                        if (bit_is_on(group3Indexes,idx) == YES )
                         {
-                            if ([group1Indexes containsIndex:i3] == YES || [group2Indexes containsIndex:i3] == YES)
+                            if (bit_is_on(group1Indexes,idx) == YES || bit_is_on(group2Indexes,idx) == YES)
                             {
-                                usableIndexSetFor3 = NO;
+                                usableGroup3Indexes = NO;
                                 break;
                             }
-                            [group3Indexes addIndex:i3];
+                            int v = [packageWeights[idx] intValue];
+                            group3Weight += v;
                         }
                     }
                     
-                    if (usableIndexSetFor3 == NO)
+                    
+                    if (usableGroup3Indexes == NO || group3Weight != targetGroupWeight)
                     {
                         continue;
                     }
                     
-                    __block int group3Weight = 0;
-                    __block unsigned long long group3QE = 1;
-                    unsigned long group3Count = [group3Indexes count];
-                    [packageWeights enumerateObjectsUsingBlock:^(NSNumber *o, NSUInteger idx, BOOL *stop)
-                     {
-                         if ([group3Indexes containsIndex:idx])
-                         {
-                             group3Weight += [o intValue];
-                             group3QE *= [o intValue];
-                         }
-                     }];
-                    
-                    if (group3Weight != groupWeight)
-                    {
-                        continue;
-                    }
-                    
-                    
-                    NSLog(@"found group3: %@\n",[packageWeights objectsAtIndexes:group3Indexes]);
-                    
-                    __block int group4Weight = 0;
-                    __block unsigned long long group4QE = 1;
-                    unsigned long group4Count = [packageWeights count] - group3Count - group2Count - group1Count;
-                    [packageWeights enumerateObjectsUsingBlock:^(NSNumber *o, NSUInteger idx, BOOL *stop)
-                     {
-                         if ([group3Indexes containsIndex:idx] == NO && [group2Indexes containsIndex:idx] == NO && [group1Indexes containsIndex:idx] == NO)
-                         {
-                             group4Weight += [o intValue];
-                             group4QE *= [o intValue];
-                         }
-                     }];
-                    
-                    if (group4Weight != groupWeight)
-                    {
-                        continue;
-                    }
-                    
-                    numberOfPackingMethodsFound++;
-                    
-                    if (group1Count <= minimumCountInGroup)
-                    {
-                        minimumCountInGroup = group1Count;
-                        
-                        if (group1QE < minimumQE)
-                        {
-                            minimumQE = group1QE;
-                            NSLog(@"found new min QE: %llu at %lu\n",minimumQE,minimumCountInGroup);
-                        }
-                    }
-                    
-                    if (group2Count <= minimumCountInGroup)
-                    {
-                        minimumCountInGroup = group2Count;
-                        
-                        if (group2QE < minimumQE)
-                        {
-                            minimumQE = group2QE;
-                            NSLog(@"found new min QE: %llu at %lu\n",minimumQE,minimumCountInGroup);
-                        }
-                    }
-                    
-                    if (group3Count <= minimumCountInGroup)
-                    {
-                        minimumCountInGroup = group3Count;
-                        
-                        if (group3QE < minimumQE)
-                        {
-                            minimumQE = group3QE;
-                            NSLog(@"found new min QE: %llu at %lu\n",minimumQE,minimumCountInGroup);
-                        }
-                    }
-                    
-                    if (group4Count <= minimumCountInGroup)
-                    {
-                        minimumCountInGroup = group4Count;
-                        
-                        if (group4QE < minimumQE)
-                        {
-                            minimumQE = group3QE;
-                            NSLog(@"found new min QE: %llu at %lu\n",minimumQE,minimumCountInGroup);
-                        }
-                    }
+                    NSLog(@"Part %@, minimumQE: %llu\n",@1,group1QE);
+                    found = YES;
                 }
-
             }
         }
     }
-    
-    NSLog(@"minimumQE: %llu\n",minimumQE);
 }
 

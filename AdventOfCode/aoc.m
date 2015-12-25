@@ -16,6 +16,9 @@
 
 #define max(a,b) (a > b ? a : b)
 
+#define bit_is_on(ba,bn) (((ba) & (1 << bn)) ? YES : NO)
+#define set_bit(ba,bn) (ba |= (1 << bn))
+
 @implementation AOC
 
 #include "day1.m"

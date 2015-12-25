@@ -13,5 +13,4 @@
 
 @end
 
-
 #endif /* aoc_h */
